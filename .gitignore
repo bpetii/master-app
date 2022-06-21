@@ -1,0 +1,15 @@
+node_modules
+/www/
+/npm-debug.log
+.DS_Store
+~*
+*.stackdump
+__pycache__
+.eggs
+*.pyc
+*.npy
+/work/tore/separation_factors/*pkl
+/.idea
+.cache/
+/work/**/*.pkl
+/storybook-static
