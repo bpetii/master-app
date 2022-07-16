@@ -4,19 +4,16 @@ import './login.css';
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [errorMessages, setErrorMessages] = useState({});
   
   const navigate = useNavigate();
   const handleSubmit = (evt) => {
     evt.preventDefault()
     if (!username) {
-      setErrorMessages({...errorMessages, username: 'Missing username'});
       return;
-    }
+    } 
     if (!password) {
-      setErrorMessages({...errorMessages, password: 'Missing password'});
       return;
-    }
+    } 
 
     fetch('http://localhost:4000/auth/login', {
       method: "POST",
@@ -27,24 +24,23 @@ const Login = () => {
       body: JSON.stringify({username, password})
     }).then(res => {
       if (!res || !res.ok || res.status >= 400) {
-        setErrorMessages({...errorMessages, form: 'Something went wrong!'});
-        return;
+        throw Error({form: 'Something went wrong!'});
       }
       return res.json();
     }).then(res => {
+      if (!res) return;
       console.log(res);
-      setErrorMessages({});
+      navigate('/home');
     }).catch(err => {
-      setErrorMessages({...errorMessages, form: err?.message});
+        console.log(err);
     });
   }
+
 
     return (
         <div className='login'>
             <form className='login__form' onSubmit={handleSubmit}>
-                {errorMessages?.form && <div>{errorMessages.form}</div>}
                 <h1>Log In</h1>
-                {errorMessages?.username && <div>{errorMessages.username}</div>}
                 <input
                     type='name'
                     placeholder='Enter username'
@@ -53,7 +49,6 @@ const Login = () => {
                       setUsername(evt.target.value)
                     }}
                 />
-                  {errorMessages?.password && <div>{errorMessages.password}</div>}
 								 <input
                     type='password'
                     placeholder='Enter password'
