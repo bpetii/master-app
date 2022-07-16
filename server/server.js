@@ -6,8 +6,9 @@ const authRouter = require('./routes/authRouter');
 const session = require('express-session');
 require("dotenv").config();
 
+
 app.use(helmet());
-app.use(cors())
+app.use(cors({credentials: true, origin: 'http://localhost:3000'}));
 
 app.use(express.json());
 
@@ -18,7 +19,7 @@ app.use(session({
     resave: false,
     saveUnititialized: false,
     cookie: {
-        secure: process.env.ENVIRONMENT === "production",
+        secure: process.env.ENVIRONMENT === "production" ? "true" : "auto",
         httpOnly: true,
         sameSite: process.env.ENVIRONMENT === "production" ? "none" : "lax",
     } 

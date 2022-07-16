@@ -27,10 +27,6 @@ router.post('/login', async (req, res) => {
 	} else {
 		res.json({loggedIn: false, status: "Wrong username or password", username: null})
 	}
-
-
- 
-
 });
 
 router.post('/signup', async (req, res) => {
@@ -49,7 +45,7 @@ router.post('/signup', async (req, res) => {
           username,
           id: insertUserQuery.rows[0].id
         }
-        res.json({loggedIn: true, username, statues:'Registered'})
+        res.json({loggedIn: true, username, status:'Registered'})
     } else {
         res.json({loggedIn: false, status: 'Username taken', username : null})
     }
