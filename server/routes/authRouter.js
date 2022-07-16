@@ -11,16 +11,19 @@ router.post('/login', async (req, res) => {
     "SELECT id, username, passhash FROM users u WHERE u.username=$1",
     [username])
 
+		console.log(loginQuery);
 	if (loginQuery.rowCount>0){
 		const isSamePass = await bcrypt.compare(
 			password, 
 			loginQuery.rows[0].passhash
 		);
+		console.log(isSamePass);
 		if (isSamePass) {
 			req.session.user ={
 				username,
 				id: loginQuery.rows[0].id
 			}
+			res.json({loggedIn: true, username})
 		} else {
 			res.json({loggedIn: false, status: "Wrong username or password", username: null})
 		}
@@ -45,7 +48,7 @@ router.post('/signup', async (req, res) => {
           username,
           id: insertUserQuery.rows[0].id
         }
-        res.json({loggedIn: true, username, status:'Registered'})
+        res.json({loggedIn: true, username})
     } else {
         res.json({loggedIn: false, status: 'Username taken', username : null})
     }
