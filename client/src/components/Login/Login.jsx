@@ -1,12 +1,13 @@
 import React, {useState} from 'react';
 import { useNavigate } from "react-router";
 import './login.css';
-const Login = () => {
+const Login = ({setAuth}) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   
   const navigate = useNavigate();
-  const handleSubmit = (evt) => {
+
+  const handleSubmit = async (evt) => {
     evt.preventDefault()
     if (!username) {
       return;
@@ -15,25 +16,27 @@ const Login = () => {
       return;
     } 
 
-    fetch('http://localhost:4000/auth/login', {
-      method: "POST",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({username, password})
-    }).then(res => {
-      if (!res || !res.ok || res.status >= 400) {
-        throw Error({form: 'Something went wrong!'});
+    try {
+      const response = await fetch('http://localhost:4000/auth/login', {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({username, password})
+      });
+      const parseRes = await response.json();
+      console.log(parseRes);
+      if (parseRes.access_token) {
+        localStorage.setItem("token", parseRes.access_token)
+        navigate("/dashboard")
+        setAuth(true)
       }
-      return res.json();
-    }).then(res => {
-      if (!res) return;
-      console.log(res);
-      navigate('/home');
-    }).catch(err => {
-        console.log(err);
-    });
+    } catch (err){
+      console.error(err);
+      setAuth(false)
+    }
+ 
   }
 
 

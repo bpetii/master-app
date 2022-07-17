@@ -2,12 +2,12 @@ import React, {useState} from 'react';
 import { useNavigate } from "react-router";
 import './register.css';
 
-const Register = () => {
+const Register = ({setAuth}) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 	const navigate = useNavigate();
 
-  const handleSubmit = (evt) => {
+  const handleSubmit = async (evt) => {
     evt.preventDefault()
     if (!username) {
       return;
@@ -16,25 +16,26 @@ const Register = () => {
       return;
     }
 
-    fetch('http://localhost:4000/auth/signup', {
+    const response = await fetch('http://localhost:4000/auth/signup', {
       method: "POST",
       credentials: "include",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({username, password})
-    }).then(res => {
-      if (!res || !res.ok || res.status >= 400) {
-				console.log('dds');
-        throw Error('Something went wrong!')
-      }
-      return res.json();
-    }).then(res => {
-      if (!res.username) {
-			} 
-    }).catch(err => {
-      	console.log(err);
     });
+
+    const parsedRes = await response.json();
+    if (parsedRes.access_token) {
+      localStorage.setItem("token",parsedRes.access_token);
+      setAuth(true)
+      navigate("/dashboard")
+    } else {
+      console.log("Someting went wrong");
+      setAuth(false)
+    }
+
+
   }
     return (
         <div className='register'>
