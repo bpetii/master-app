@@ -19,7 +19,7 @@ router.post('/', async (req, res) => {
         "INSERT INTO users(name, email, passhash, issecretary) VALUES($1,$2,$3,$4) RETURNING id, name, email, issecretary",
         [name, email, hashedPass, isSecretary]);
 			const access_token = jwtGenerator(newUser.rows[0].id);
-      res.json({access_token, loggedIn: true, user: newUser.rows[0]})
+      res.header('x-auth-token', access_token).send({access_token, loggedIn: true, user: newUser.rows[0]})
     } else {
       res.status(401).json({loggedIn: false, status: 'User already registered', username : null})
     }

@@ -18,7 +18,7 @@ router.post('/', async (req, res) => {
       if(!isValidPassword) return res.status(400).json({loggedIn: false, status: "Invalid email or password", ema: null})
 
       const access_token = jwtGenerator(user.rows[0].id);
-      res.json({access_token, loggedIn: true, user: omit(user.rows[0], ['passhash'])}) 
+      res.header('x-auth-token', access_token).send({access_token, loggedIn: true, user: omit(user.rows[0], ['passhash'])}) 
   });
 
   module.exports = router;
