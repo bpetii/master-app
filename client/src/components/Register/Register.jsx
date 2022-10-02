@@ -1,70 +1,90 @@
 import React, {useState} from 'react';
 import { useNavigate } from "react-router";
+import {Card, Field, Input, Flex, Button} from '@bpetii/uio-gui-library';
+import { connect } from 'react-redux';
+import { useParams } from "react-router-dom";
+import {authRegister} from '../../store/slices/userSlice';
+import { ToastContainer, toast } from 'react-toastify';
+import {Footer} from '@bpetii/uio-gui-library';
+import 'react-toastify/dist/ReactToastify.css';
 import './register.css';
 
-const Register = ({setAuth}) => {
-  const [username, setUsername] = useState('');
+const Register = ({
+  authRegister
+}) => {
+  const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
   const [password, setPassword] = useState('');
+  let { isSecretary } = useParams();
 	const navigate = useNavigate();
 
-  const handleSubmit = async (evt) => {
+  const validateForm = () => {
+    return !name || !email || !password;
+  }
+
+  const handleSubmit = (evt) => {
     evt.preventDefault()
-    if (!username) {
-      return;
-    }
-    if (!password) {
-      return;
-    }
-
-    const response = await fetch('http://localhost:4000/auth/signup', {
-      method: "POST",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({username, password})
-    });
-
-    const parsedRes = await response.json();
-    if (parsedRes.access_token) {
-      localStorage.setItem("token",parsedRes.access_token);
-      setAuth(true)
-      navigate("/dashboard")
-    } else {
-      console.log("Someting went wrong");
-      setAuth(false)
-    }
-
-
+    if (validateForm()) return;
+    authRegister(name, email, password, isSecretary).then(() => {
+      navigate('/dashboard')
+    }).catch((err) => {
+      toast.error(err.status)
+    })
   }
     return (
-        <div className='register'>
-            <form className='register__form' onSubmit={handleSubmit}>
-                <h1>Create account</h1>
-                <input
-                    type='name'
-                    placeholder='Enter username'
-										value={username}
-										onChange={(evt) => {
-                      setUsername(evt.target.value)
-                    }}
+      <div className='register'>
+        <ToastContainer />
+        <div className='authCard'>
+        <Card raised> 
+            <Field label="Name">
+                <Input 
+                  name='name'
+                  placeholder='Enter your name'
+                  onChange={(evt) => {
+                    setName(evt.target.value)
+                  }}
+                  error={!name? "Empty field" : null}
+                  value={name}
+                /> 
+              </Field>
+            <Field label="Email address">
+                <Input 
+                  name='email'
+                  placeholder='Enter your email address'
+                  onChange={(evt) => {
+                    setEmail(evt.target.value)
+                  }}
+                  error={!email? "Empty field" : null}
+                  value={email}
                 />
-								 <input
+              </Field>
+                <Field label="Password">
+                  <Input 
+                    name='password'
                     type='password'
-                    placeholder='Enter password'
-                    value={password}
-										onChange={(evt) => {
+                    placeholder='Enter your password'
+                    onChange={(evt) => {
                       setPassword(evt.target.value)
                     }}
-                />
-                <div className='form__actions'>
-                  <button type="submit"className='submit__btn'>Create account</button>
-                  <button className='submit__btn' onClick={() => navigate('/')}>Back</button>
-                </div>
-            </form>
-        </div>
+                    error={!password? "Empty field" : null}
+                    value={password}
+                    />
+                </Field>
+                <Field>
+                  <Flex gap='15px'>
+                    <Button active type="submit" label ='Create account' onClick={handleSubmit} disabled={validateForm()}/>
+                    <Button onClick={() => navigate('/')} label='Back'/>
+                  </Flex>
+                </Field> 
+        </Card>
+        </div> 
+        <Footer />   
+      </div>  
     )
 }
 
+const mapDispatchToProps = {
+  authRegister,
+};
 
-export default Register
+export default connect(null, mapDispatchToProps)(Register);

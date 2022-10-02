@@ -1,73 +1,82 @@
 import React, {useState} from 'react';
 import { useNavigate } from "react-router";
 import './login.css';
-const Login = ({setAuth}) => {
-  const [username, setUsername] = useState('');
+import { useParams } from "react-router-dom";
+import { connect } from 'react-redux';
+import {authLogin} from '../../store/slices/userSlice';
+import {Flex, Button, Card, Field, Input} from '@bpetii/uio-gui-library';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+const Login = ({
+  authLogin
+}) => {
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  let { isSecretary } = useParams();
+
   
   const navigate = useNavigate();
 
-  const handleSubmit = async (evt) => {
-    evt.preventDefault()
-    if (!username) {
-      return;
-    } 
-    if (!password) {
-      return;
-    } 
-
-    try {
-      const response = await fetch('http://localhost:4000/auth/login', {
-        method: "POST",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({username, password})
-      });
-      const parseRes = await response.json();
-      console.log(parseRes);
-      if (parseRes.access_token) {
-        localStorage.setItem("token", parseRes.access_token)
-        navigate("/dashboard")
-        setAuth(true)
-      }
-    } catch (err){
-      console.error(err);
-      setAuth(false)
-    }
- 
+  const validateForm = () => {
+    return  !email || !password;
   }
 
+  const handleSubmit = async (evt) => {
+    evt.preventDefault()
+    if (validateForm()) return;
 
-    return (
-        <div className='login'>
-            <form className='login__form' onSubmit={handleSubmit}>
-                <h1>Log In</h1>
-                <input
-                    type='name'
-                    placeholder='Enter username'
-										value={username}
-										onChange={(evt) => {
-                      setUsername(evt.target.value)
-                    }}
-                />
-								 <input
-                    type='password'
-                    placeholder='Enter password'
-                    value={password}
-										onChange={(evt) => {
-                      setPassword(evt.target.value)
-                    }}
-                />
-                <div className='form__actions'>
-                  <button type="submit "className='submit__btn'>Log In</button>
-                  <button className='submit__btn' onClick={() => navigate('/register')}>Create Account </button>
-                </div>
-            </form>
-        </div>
-    )
-}
+    authLogin(email, password, isSecretary).then(() => {
+      navigate('/dashboard')
+    }).catch(err => {
+      toast.error(err.status, {
+        autoClose: 2000,
+        hideProgressBar: true,
+      });
+    })
+  }
 
+   return (
+    <div className='login'>
+       <ToastContainer />
+      <div className='authCard'>
+        <Card raised> 
+              <Field label="Email address">
+                    <Input 
+                      name='email'
+                      placeholder='Enter your email address'
+                      onChange={(evt) => {
+                        setEmail(evt.target.value)
+                      }}
+                      error={!email? "Empty field" : null}
+                      value={email}
+                    />
+                  </Field>
+                  <Field label="Password">
+                      <Input 
+                        name='password'
+                        type='password'
+                        placeholder='Enter your password'
+                        onChange={(evt) => {
+                          setPassword(evt.target.value)
+                        }}
+                        error={!password? "Empty field" : null}
+                        value={password}
+                        />
+                    </Field>
+                  <Flex gap="15px">
+                    <Button active type="submit" label ='Log In' disabled={validateForm()} onClick={handleSubmit} />
+                    <Button onClick={() => navigate('/')} label='Back'/>
+                  </Flex>
+                </Card>
+          </div>
+        </div>  
+    ) 
+  }
 
-export default Login
+  const mapDispatchToProps = {
+    authLogin
+  };
+  
+  export default connect(null, mapDispatchToProps)(Login);
