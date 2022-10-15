@@ -38,7 +38,6 @@ export const authLogin = (email, password, isSecretary) => async dispatch => {
         body: JSON.stringify({email, password, isSecretary})
       });
       const parsedRes = await response.json();
-      console.log(parsedRes);
       if (parsedRes.access_token) {
         dispatch(logIn(parsedRes))
         return Promise.resolve();
@@ -53,7 +52,6 @@ export const authLogin = (email, password, isSecretary) => async dispatch => {
   export const authRegister = (name, email, password, isSecretary) => async dispatch => {
     try {
 
-        console.log(name, email, password);
         const response = await fetch(API_URL + 'users', {
             method: "POST",
             credentials: "include",
@@ -64,7 +62,6 @@ export const authLogin = (email, password, isSecretary) => async dispatch => {
           });
       
           const parsedRes = await response.json();
-          console.log(parsedRes);
           if (parsedRes.access_token) {
             dispatch(logIn(parsedRes))
             return Promise.resolve();
@@ -74,6 +71,10 @@ export const authLogin = (email, password, isSecretary) => async dispatch => {
     } catch (err) {
         return Promise.reject(err);
     }
+}
+
+export const logout = () => async dispatch => {
+  dispatch(logOut);
 }
 
 export default userSlice.reducer;
