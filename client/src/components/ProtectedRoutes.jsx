@@ -1,7 +1,9 @@
 import { Outlet, Navigate} from "react-router";
+import {useSelector} from 'react-redux';
 
-    const ProtectedRoute = ({ isAuthenticated }) => {
-        if (!isAuthenticated) {
+    const ProtectedRoute = () => {
+      const user = useSelector(state => state.user);
+        if (!user) {
           return <Navigate to="/" replace />;
         }
       
