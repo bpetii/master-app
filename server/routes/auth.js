@@ -6,11 +6,12 @@ const {omit} = require('lodash')
 const bcrypt = require('bcrypt');
 
 router.post('/', async (req, res) => {
-    const {email, password} = req.body;
+    const {email, password, isSecretary} = req.body;
+    console.log(req.body);
   
     const user = await pool.query(
-      "SELECT id, name, passhash, email, issecretary FROM users u WHERE u.email=$1",
-      [email])
+      "SELECT id, name, passhash, email, issecretary FROM users u WHERE u.email=$1 AND u.issecretary=$2",
+      [email, isSecretary])
   
       if (!user.rowCount) return res.status(400).json({loggedIn: false, status: "Invalid email or password", username: null});
         
