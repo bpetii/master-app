@@ -1,0 +1,18 @@
+
+CREATE TABLE IF NOT EXISTS users (
+  id UUID NOT NULL DEFAULT uuid_generate_v1(),
+  email character varying(30),
+  name character varying(30),
+  passhash character varying(255) NOT NULL,
+  issecretary boolean NOT NULL
+);
+
+
+
+CREATE TABLE IF NOT EXISTS doctors (
+  id UUID NOT NULL DEFAULT uuid_generate_v1(),
+  name character varying (50),
+  city character varying (50),
+  expertise character varying (50)
+);
+

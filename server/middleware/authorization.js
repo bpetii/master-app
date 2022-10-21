@@ -5,7 +5,6 @@ module.exports = async (req, res, next) => {
   try {
     const jwtToken = req.header("x-auth-token");
 
-
     if (!jwtToken) {
       return res.status(403).json("Not authorized");
     }
