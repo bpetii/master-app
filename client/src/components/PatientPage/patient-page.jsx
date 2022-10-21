@@ -4,10 +4,10 @@ import {Drawer, List, Flex, Message, Loader, Spinner} from '@bpetii/uio-gui-libr
 import Schedule from './schedule/schedule';
 import './patient-page.css'
 import { DataFilter } from './data-filter/data-filter';
-import { loadDoctors } from '../../store/slices/doctorsSlice';
+import { loadDoctors, doctorSelected } from '../../store/slices/doctorsSlice';
 
 const PatientPage = () => {
-  const {doctors, loading, error} = useSelector(state => state.doctors);
+  const {doctors, loading, error, selectedDoctor} = useSelector(state => state.doctors);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -23,6 +23,14 @@ const PatientPage = () => {
       }} />
     </div>);
 
+  const list = {
+    items: doctors.map(({id, name}) => ({
+      id: id,
+      name: name,
+      onClick: () => dispatch(doctorSelected(id)),
+      active: selectedDoctor?.id === id
+    }))}
+
   return (
     <>
       <Flex height="calc(100vh - 75px)">
@@ -32,7 +40,7 @@ const PatientPage = () => {
               padding: 20,
             }}
           >
-            <Schedule />
+           {selectedDoctor && <Schedule />} 
           </div>
           <Drawer
             open
@@ -45,7 +53,7 @@ const PatientPage = () => {
         <div >
           <DataFilter />
           {errorMessage}
-          {true ? (
+          {loading ? (
             <Loader
               width="100%"
               height="100px"
@@ -54,7 +62,7 @@ const PatientPage = () => {
             </Loader>
             ): (
               <List 
-                  list={{items: doctors}}
+                  list={list}
               />
               )}
         </div>
