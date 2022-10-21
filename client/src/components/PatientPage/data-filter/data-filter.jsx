@@ -1,6 +1,6 @@
 import React from 'react';
-import { Spacer, Field, CustomSelect, Divider} from '@bpetii/uio-gui-library';
-import './patient-page.css'
+import { Spacer, Field, CustomSelect} from '@bpetii/uio-gui-library';
+import './data-filter.css'
 
 export const DataFilter = () => {
 

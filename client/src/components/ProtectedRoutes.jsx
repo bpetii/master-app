@@ -1,8 +1,9 @@
 import { Outlet, Navigate} from "react-router";
+import {selectCurrentUser} from '../store/slices/userSlice'
 import {useSelector} from 'react-redux';
 
     const ProtectedRoute = () => {
-      const user = useSelector(state => state.user);
+      const user = useSelector(selectCurrentUser);
         if (!user) {
           return <Navigate to="/" replace />;
         }
