@@ -1,25 +1,25 @@
 import React from 'react';
 import './schedule.css'
-
+import { useDispatch, useSelector } from 'react-redux';
 import DayTimePicker from '@mooncake-dev/react-day-time-picker';
+import { createAppointments } from '../../../store/slices/appointmentsSlice';
 
-const Schedule = (props) => {
+const Schedule = ({userid, doctorid}) => {
+  const {loading, error, done} = useSelector(state => state.appointments)
+  const {selectedDoctor} = useSelector(state => state.doctors)
+  const dispatch = useDispatch();
 
-  const handleScheduled = (dateTime) => {
-    console.log(dateTime);
+  const handleScheduled = (datetime) => {
+    const payload = {
+      datetime,
+      userid,
+      doctorid
+    }
+    dispatch(createAppointments(payload))
   }
 
   function timeSlotValidator(slotTime) {
-    console.log(slotTime)
-   /*  const doctorTime = new Date(
-      slotTime.getFullYear(),
-      slotTime.getMonth(),
-      slotTime.getDate(),
-      18,
-      0,
-      0
-    ); */
-    /* const isValid = slotTime.getTime() > eveningTime.getTime();  */
+    console.log(slotTime.getHours())
     return true;
   }
 
@@ -29,11 +29,11 @@ const Schedule = (props) => {
         timeSlotSizeMinutes={15} 
         onConfirm={handleScheduled}
         timeSlotValidator={timeSlotValidator}
-       /*  confirmText='Your appointment has been scheduled with...' */
-        isLoading={false}
-        isDone={false}
-    /*     isDone={true} */
-      /*   err='There is something wrong!' */
+        isLoading={loading}
+        err={error}
+        doneText={`You scheduled an appointment with ${selectedDoctor.name}`}
+        isDone={!error && done}
+        
       />
     </div>);
 }

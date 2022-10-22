@@ -4,7 +4,7 @@ import * as actions from '../api';
 const api = ({dispatch, getState}) => next => async action => {
     if (action.type !== actions.apiCallBegan.type) return next(action);
 
-    const {url, method, data, onStart, onSuccess, onError} = action.payload;
+    const {url, method, data, params,  onStart, onSuccess, onError} = action.payload;
 
     if (onStart) dispatch({type: onStart});
 
@@ -14,6 +14,7 @@ const api = ({dispatch, getState}) => next => async action => {
         const {user} = getState();
         const response = await axios.request({
             headers: {'x-auth-token': user.access_token},
+            params,
             baseURL: 'http://localhost:4000/api/',
             url, 
             method,

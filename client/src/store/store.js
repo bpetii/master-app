@@ -1,6 +1,7 @@
 import { configureStore, getDefaultMiddleware  } from '@reduxjs/toolkit'
 import user from './slices/userSlice';
 import doctors from './slices/doctorsSlice';
+import appointments from './slices/appointmentsSlice'
 import { persistReducer } from 'redux-persist'
 import { combineReducers } from '@reduxjs/toolkit';
 import storage from 'redux-persist/lib/storage'
@@ -14,7 +15,8 @@ const persistConfig = {
 
 const reducer = combineReducers({
   user: user,
-  doctors: doctors
+  doctors: doctors,
+  appointments: appointments
 })
 
 const persistedReducer = persistReducer(persistConfig, reducer) 
