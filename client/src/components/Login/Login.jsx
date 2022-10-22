@@ -3,16 +3,17 @@ import { useNavigate } from "react-router";
 import './login.css';
 import { connect } from 'react-redux';
 import {authLogin} from '../../store/slices/userSlice';
-import {Button, Field, Input, Dialog, Message} from '@bpetii/uio-gui-library';
+import {useTranslation} from 'react-i18next';
+import {Button, Field, Input, Dialog} from '@bpetii/uio-gui-library';
 
 const Login = ({
   authLogin,
   isSecretary,
   closeModal
 }) => {
+  const {t} = useTranslation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
   
   const navigate = useNavigate();
 
@@ -27,41 +28,30 @@ const Login = ({
     authLogin(email, password, isSecretary).then(() => {
       navigate('/patient')
     }).catch(err => {
-      setError(err.status)
       console.error(err);
     })
   }
 
-  const errorMessage = error && (
-  <div style={{ display: 'flex', justifyContent: 'center', marginTop: '5px', marginBottom: '15px' }}>
-    <Message message={{
-      visible: true,
-      content: error,
-      type: 'Error',
-    }} />
-  </div>);
-
   const loginContent = (
   <>
-    {errorMessage}
-    <Field label="Email address">
+    <Field label={t("email")}>
       <Input
         name='email'
-        placeholder='Enter your email address'
+        placeholder={t("enterYourEmail")}
         onChange={(evt) => {
           setEmail(evt.target.value);
         } }
-        error={!email ? "Empty field" : null}
+        error={!email ? "error" : null}
         value={email} />
-    </Field><Field label="Password">
+    </Field><Field label={t("password")}>
         <Input
           name='password'
           type='password'
-          placeholder='Enter your password'
+          placeholder={t("enterYourPassword")}
           onChange={(evt) => {
             setPassword(evt.target.value);
           } }
-          error={!password ? "Empty field" : null}
+          error={!password ? "errpr" : null}
           value={password} />
       </Field>
     </>
@@ -71,12 +61,12 @@ const Login = ({
     <div className='authCard'>
       <Dialog
         dialog={{
-          heading: "Login",
+          heading: t("login"),
           content: loginContent,
           footer: ( 
           <>
-          <Button active type="submit" label ='Log In' disabled={validateForm()} onClick={handleSubmit} />
-          <Button onClick={closeModal} label='Close'/>
+          <Button active type="submit" label ={t("login")} disabled={validateForm()} onClick={handleSubmit} />
+          <Button onClick={closeModal} label={t("close")}/>
           </>
           ),
           onClose: closeModal,

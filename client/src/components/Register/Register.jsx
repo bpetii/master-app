@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import { useNavigate } from "react-router";
 import { Field, Input, Button, Dialog, Message} from '@bpetii/uio-gui-library';
 import { connect } from 'react-redux';
+import {useTranslation} from 'react-i18next';
 import {authRegister} from '../../store/slices/userSlice';
 import './register.css';
 
@@ -10,10 +11,10 @@ const Register = ({
   isSecretary,
   closeModal
 }) => {
+  const {t} = useTranslation();
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
 	const navigate = useNavigate();
 
   const validateForm = () => {
@@ -28,73 +29,43 @@ const Register = ({
       await authRegister(name, email, password, isSecretary);
       navigate('/patient/')
     } catch (err){
-      setError(err.status);
       console.error(err);
     }
   }
 
-  const errorMessage = error && (
-    <div style={{ display: 'flex', justifyContent: 'center', marginTop: '5px', marginBottom: '15px' }}>
-      <Message message={{
-        visible: true,
-        content: error,
-        type: 'Error',
-      }} />
-    </div>);
-  
-
   const registerContent = ( 
     <> 
-      {errorMessage}
-      <Field label="Name">
+      <Field label={t("name")}>
           <Input 
             name='name'
-            placeholder='Enter your name'
+            placeholder={t("enterYourName")}
             onChange={(evt) => {
-              const {value} = evt.target;
-              if(!value) {
-                setError("Name field is empty")
-              } else {
-                setError('')
-              }
               setName(evt.target.value)
             }}
-            error={!name? "Empty field" : null}
+            error={!name? "error" : null}
             value={name}
           /> 
         </Field>
-      <Field label="Email address">
+      <Field label={t("email")}>
           <Input 
             name='email'
-            placeholder='Enter your email address'
+            placeholder={t("enterYourEmail")}
             onChange={(evt) => {
-              const {value} = evt.target;
-              if(!value) {
-                setError("Email field is empty")
-              } else {
-                setError('')
-              }
               setEmail(evt.target.value)
             }}
-            error={!email? "Empty field" : null}
+            error={!email? "error" : null}
             value={email}
           />
         </Field>
-          <Field label="Password">
+          <Field label={t("password")}>
             <Input 
               name='password'
               type='password'
-              placeholder='Enter your password'
+              placeholder={t("enterYourPassword")}
               onChange={(evt) => {
-                const {value} = evt.target;
-                if(!value) {
-                  setError("Password field is empty")
-                } else {
-                  setError('')
-                }
                 setPassword(evt.target.value)
               }}
-              error={!password? "Empty field" : null}
+              error={!password? "error" : null}
               value={password}
               />
           </Field>
@@ -104,12 +75,12 @@ const Register = ({
   <div className='authCard'>
     <Dialog
       dialog={{
-        heading: "Register",
+        heading: t("register"),
         content: registerContent,
         footer: ( 
         <>
-        <Button active type="submit" label ='Create account' onClick={handleSubmit} disabled={validateForm()}/>
-        <Button onClick={() => closeModal()} label='Close'/>
+        <Button active type="submit" label ={t("createAccount")} onClick={handleSubmit} disabled={validateForm()}/>
+        <Button onClick={() => closeModal()} label={t("close")}/>
         </>
         ),
         onClose: closeModal,
