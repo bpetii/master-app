@@ -4,7 +4,7 @@ const authorization = require('../middleware/authorization')
 
 router.get("/", authorization, async (req, res) => {
   try {
-    const doctors = await pool.query("SELECT id, name, expertise, city FROM doctors",
+    const doctors = await pool.query(`SELECT id, name, expertise, city, "from", "to" FROM doctors`,
 		[]);
 		res.json(doctors.rows);
   } catch (err){
