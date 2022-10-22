@@ -3,7 +3,7 @@ import { Spacer, Field, CustomSelect} from '@bpetii/uio-gui-library';
 import './data-filter.css'
 import {capitalize, omit} from 'lodash';
 
-const FILTER_KEYS = ['city', 'expertise']
+const FILTER_KEYS = ['city', 'expertise', 'name']
 
 export const DataFilter = ({
   doctors,

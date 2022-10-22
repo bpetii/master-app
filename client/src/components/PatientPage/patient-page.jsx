@@ -44,11 +44,12 @@ const filteredDoctors = doctorsFiltered(doctors, filters);
 
   return (
     <>
-      <Flex height="calc(100vh - 75px)">
+      <Flex height={'100%'}>
           <div
             style={{
               flexGrow: 1,
-              padding: 20,
+              display: 'flex',
+              alignItems: 'center'
             }}
           >
            {selectedDoctor && <Schedule userid={userid} doctorid={selectedDoctor.id} />} 

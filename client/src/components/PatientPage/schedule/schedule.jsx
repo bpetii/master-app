@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import DayTimePicker from '@mooncake-dev/react-day-time-picker';
 import { createAppointments } from '../../../store/slices/appointmentsSlice';
 
+const SLOT_MINUTES = 15;
+
 const Schedule = ({userid, doctorid}) => {
   const {loading, error, done} = useSelector(state => state.appointments)
   const {selectedDoctor} = useSelector(state => state.doctors)
@@ -19,14 +21,25 @@ const Schedule = ({userid, doctorid}) => {
   }
 
   function timeSlotValidator(slotTime) {
-    console.log(slotTime.getHours())
-    return true;
+    const {from, to} = selectedDoctor;
+
+    const [fromHour, fromMinute] = from.split(':');
+    const [toHour, toMinute] = to.split(':');
+
+    const fromTotalMinutes = (+fromHour * 60) + +fromMinute;
+    const toTotalMinutes = (+toHour * 60) + +toMinute;
+    const slotTotalMinutes = (+slotTime.getHours() * 60) + +slotTime.getMinutes();
+
+    if (fromTotalMinutes <= slotTotalMinutes && toTotalMinutes >= slotTotalMinutes + SLOT_MINUTES) {
+      return true;
+    }
+    return false;
   }
 
   return (
     <div className='container'>
       <DayTimePicker 
-        timeSlotSizeMinutes={15} 
+        timeSlotSizeMinutes={SLOT_MINUTES} 
         onConfirm={handleScheduled}
         timeSlotValidator={timeSlotValidator}
         isLoading={loading}
