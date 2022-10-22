@@ -1,10 +1,10 @@
-
 CREATE TABLE IF NOT EXISTS users (
-  id UUID NOT NULL DEFAULT uuid_generate_v1(),
+  id UUID NOT NULL DEFAULT uuid_generate_v1() UNIQUE,
   email character varying(30),
   name character varying(30),
   passhash character varying(255) NOT NULL,
-  issecretary boolean NOT NULL
+  issecretary boolean NOT NULL,
+  CONSTRAINT users_id_pk PRIMARY KEY (id)
 );
 
 
@@ -13,6 +13,16 @@ CREATE TABLE IF NOT EXISTS doctors (
   id UUID NOT NULL DEFAULT uuid_generate_v1(),
   name character varying (50),
   city character varying (50),
-  expertise character varying (50)
+  expertise character varying (50),
+  CONSTRAINT doctors_id_pk PRIMARY KEY (id)
 );
 
+
+CREATE TABLE IF NOT EXISTS appointments (
+	  id UUID NOT NULL DEFAULT uuid_generate_v1(),
+	  doctorid UUID NOT NULL REFERENCES doctors(id) ON DELETE CASCADE,
+	  userid UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+	  datetime timestamp NOT NULL ,
+	  created timestamp NOT NULL,
+     CONSTRAINT appointments_id_pk PRIMARY KEY (id)
+);

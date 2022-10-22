@@ -3,7 +3,6 @@ const pool = require('../db');
 const authorization = require('../middleware/authorization')
 
 router.get("/", authorization, async (req, res) => {
-  console.log(req);
   try {
     const doctors = await pool.query("SELECT id, name, expertise, city FROM doctors",
 		[]);

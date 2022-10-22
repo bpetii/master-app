@@ -4,6 +4,7 @@ const app = express();
 const auth = require('./routes/auth');
 const users = require('./routes/users');
 const doctors= require('./routes/doctors');
+const appointments = require('./routes/appointments');
 require("dotenv").config();
 
 app.use(cors({credentials: true, origin: 'http://localhost:3000'}));
@@ -13,6 +14,7 @@ app.use(express.json());
 app.use('/api/users', users);
 app.use('/api/auth', auth);
 app.use('/api/doctors', doctors)
+app.use('/api/appointments', appointments)
 
 
 const port = process.env.PORT || 4000
