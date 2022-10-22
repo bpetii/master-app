@@ -3,10 +3,12 @@ import './schedule.css'
 import { useDispatch, useSelector } from 'react-redux';
 import DayTimePicker from '@mooncake-dev/react-day-time-picker';
 import { createAppointments } from '../../../store/slices/appointmentsSlice';
+import {useTranslation} from 'react-i18next';
 
 const SLOT_MINUTES = 15;
 
 const Schedule = ({userid, doctorid}) => {
+  const {t} = useTranslation();
   const {loading, error, done} = useSelector(state => state.appointments)
   const {selectedDoctor} = useSelector(state => state.doctors)
   const dispatch = useDispatch();
@@ -43,9 +45,11 @@ const Schedule = ({userid, doctorid}) => {
         onConfirm={handleScheduled}
         timeSlotValidator={timeSlotValidator}
         isLoading={loading}
+        loadingText={t("loading")}
         err={error}
-        doneText={`You scheduled an appointment with ${selectedDoctor.name}`}
+        doneText={t("doneText", {name: selectedDoctor.name})}
         isDone={!error && done}
+        confirmText={t("schedule")}
         
       />
     </div>);

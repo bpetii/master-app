@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import { useNavigate } from "react-router";
-import { Field, Input, Button, Dialog, Message} from '@bpetii/uio-gui-library';
+import { Field, Input, Button, Dialog} from '@bpetii/uio-gui-library';
 import { connect } from 'react-redux';
 import {useTranslation} from 'react-i18next';
 import {authRegister} from '../../store/slices/userSlice';
