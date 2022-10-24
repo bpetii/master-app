@@ -46,7 +46,7 @@ const Register = ({
             value={name}
           /> 
         </Field>
-      <Field label={t("email")}>
+      <Field label={t("email")} >
           <Input 
             name='email'
             placeholder={t("enterYourEmail")}

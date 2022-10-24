@@ -30,7 +30,7 @@ export const translationsEn = {
      register: "Regisztráció",
    
      //login:
-     email: "Emal cím",
+     email: "Email cím",
      password: "Jelszó",
      enterYourEmail: "Adja meg az email címét",
      enterYourPassword: "Adja meg a jelszavát",
@@ -47,7 +47,7 @@ export const translationsEn = {
      schedule: "Foglal", 
      doneText: "Sikeres időpont foglalás {{name}} doktorral",
      loading: "Töltés", 
- } 
+ }
  
  export const translationsFa = {
    //pre-login:

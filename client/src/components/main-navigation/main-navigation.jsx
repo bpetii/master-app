@@ -1,11 +1,17 @@
 
-import React , {useState} from 'react';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { FaUser } from 'react-icons/fa';
-import {TopBar, Button} from '@bpetii/uio-gui-library';
+import {CgDarkMode} from 'react-icons/cg';
+import {TopBar, Menu, Button,} from '@bpetii/uio-gui-library';
+import { logOut } from '../../store/slices/userSlice';
 import i18n from 'i18next';
 
 const MainNavigation = () => {
     const [lang, setLang] = useState(i18n.language)
+    const dispatch = useDispatch();
+
+
   const content = [
     {
         type: 'Text',
@@ -20,24 +26,54 @@ const MainNavigation = () => {
         onClick: () => {},
       },
       {
-        type: 'Button',
-        label: lang,
-        colored: true,
-        onClick: (e) => {
-          if (lang === 'en') {
-            i18n.changeLanguage('fa')
-            setLang('fa')
+        type: 'Component',
+        component: <Menu menu={{
+          sections: [
+            {
+                label: 'EN',
+                onClick: () => {
+                    i18n.changeLanguage('en').then(() => setLang('en'));
+                },
+                type: 'Option',
+                selected: lang === 'en'
+            },
+            {
+                label: 'FA',
+                onClick: () => {
+                  i18n.changeLanguage('fa').then(() => setLang('fa'));
+                },
+                type: 'Option',
+                selected: lang === 'fa'
+            },
+            {
+              label: 'HU',
+              onClick: () => {
+                i18n.changeLanguage('hu').then(() => setLang('hu'));
+              },
+              type: 'Option',
+              selected: lang === 'hu'
           }
-          if (lang === 'fa'){
-            setLang('en')
-            i18n.changeLanguage('en')
-          } 
-        },
+        ],
+        component: (<div>
+          <Button label={lang} round />
+          </div>),
+      }}/>,
+        label: i18n.language,
+        colored: true,
       },
   {
     type: 'Component',
     component: (
-        <Button label={<FaUser />} round onClick={() => {}} />
+        <Menu menu={{
+            sections: [
+              {
+                  label: 'Logout',
+                  onClick: () => dispatch(logOut()),
+                  type: 'Option'
+              }],
+            component: (<Button label={<FaUser />} round />),
+            left: true
+            }}/>
     ),
   },
   ];
