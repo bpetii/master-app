@@ -34,7 +34,7 @@ const Login = ({
 
   const loginContent = (
   <>
-    <Field label={t("email")}>
+     <Field label={t("email")}>
       <Input
         name='email'
         placeholder={t("enterYourEmail")}
@@ -43,7 +43,8 @@ const Login = ({
         } }
         error={!email ? "error" : null}
         value={email} />
-    </Field><Field label={t("password")}>
+    </Field>
+    <Field label={t("password")}>
         <Input
           name='password'
           type='password'
