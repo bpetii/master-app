@@ -5,6 +5,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { persistStore } from 'redux-persist';
 import ReactDOM from 'react-dom/client';
 import App from './App';
+import '@bpetii/uio-gui-library/dist/esm/assets/global.css'
 import './index.css'
 
 

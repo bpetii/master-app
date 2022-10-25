@@ -27,7 +27,11 @@ const Login = ({
     if (validateForm()) return;
 
     authLogin(email, password, isSecretary).then(() => {
-      navigate('/patient')
+      if (isSecretary) {
+        navigate('/secretary')
+      } else {
+        navigate('/patient')
+      }
     }).catch(err => {
       setError(err.status);
       console.error(err);

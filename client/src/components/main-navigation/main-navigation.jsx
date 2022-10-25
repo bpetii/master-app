@@ -9,6 +9,7 @@ import i18n from 'i18next';
 
 const MainNavigation = () => {
     const [lang, setLang] = useState(i18n.language)
+    const [darkMode, setDarkMode] = useState('default');
     const dispatch = useDispatch();
 
 
@@ -21,9 +22,14 @@ const MainNavigation = () => {
   const contentRight = [
       {
         type: 'Button',
-        label: "Dark mode",
+        label: darkMode,
         colored: true,
-        onClick: () => {},
+        onClick: () => {
+          const mode = darkMode === 'default' ? 'dark' : 'default'
+
+          document.documentElement.setAttribute('data-theme', mode);
+          setDarkMode(mode);
+        },
       },
       {
         type: 'Component',
