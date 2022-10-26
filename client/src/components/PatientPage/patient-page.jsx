@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {Drawer, List, Flex, Message, Loader, Spinner} from '@bpetii/uio-gui-library';
+import {Drawer, List, Flex, Message, Loader, Spinner, Page} from '@bpetii/uio-gui-library';
 import Schedule from './schedule/schedule';
 import './patient-page.css'
 import { DataFilter } from './data-filter/data-filter';
@@ -43,7 +43,7 @@ const filteredDoctors = doctorsFiltered(doctors, filters);
     </div>);
 
   return (
-    <>
+    <Page left='0' padding='0'>
       <Flex height={'100%'}>
           <div
             style={{
@@ -84,7 +84,7 @@ const filteredDoctors = doctorsFiltered(doctors, filters);
         </div>
         </Drawer>
      </Flex>
-      </>
+      </Page>
   )
 }
 

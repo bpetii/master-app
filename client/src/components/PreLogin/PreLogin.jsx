@@ -1,5 +1,5 @@
 import React, { useState }  from 'react';
-import {Flex, Icon, Button, Modal} from '@bpetii/uio-gui-library';
+import {Flex, Icon, Button, Modal, Page} from '@bpetii/uio-gui-library';
 import { FaHospitalUser } from 'react-icons/fa';
 import { useTranslation } from 'react-i18next';
 import Register from '../Register/Register';
@@ -11,35 +11,35 @@ const PreLogin = () => {
   const [loginModalData, setLoginModalData] = useState({visible: false, isSecretary: true});
 
    return (
-    <div style={{height: '100vh'}}>
-    <Flex 
-        gap="300px" 
-        alignItems="center"
-        height="100vh"
-        justifyContent="center"
-      >
-          <Flex direction="column">
-            <Icon icon={<FaHospitalUser />} size="200px"/>
+    <Page left='0'>
+      <Flex 
+          gap="300px" 
+          alignItems="center"
+          height="100vh"
+          justifyContent="center"
+        >
             <Flex direction="column">
-              <Button label={t("login")} onClick={()=> setLoginModalData({visible:true, isSecretary: true})} />
+              <Icon icon={<FaHospitalUser />} size="200px"/>
+              <Flex direction="column">
+                <Button label={t("login")} onClick={()=> setLoginModalData({visible:true, isSecretary: true})} />
+              </Flex>
+            </Flex>
+            
+            <Flex direction="column">
+              <Icon icon={<FaHospitalUser />} size="200px"/>
+              <Flex direction="column"  gap='10px'>
+                <Button label={t("login")} onClick={()=> setLoginModalData({visible:true, isSecretary: false})} />
+                <Button label={t("register")} onClick={() => setRegisterModalData({visible:true, isSecretary:false})} />
+              </Flex>
             </Flex>
           </Flex>
-          
-          <Flex direction="column">
-            <Icon icon={<FaHospitalUser />} size="200px"/>
-            <Flex direction="column">
-              <Button label={t("login")} onClick={()=> setLoginModalData({visible:true, isSecretary: false})} />
-              <Button label={t("register")} onClick={() => setRegisterModalData({visible:true, isSecretary:false})} />
-            </Flex>
-          </Flex>
-        </Flex>
-    <Modal visible={registerModalData.visible} centered>
-      <Register isSecretary={registerModalData.isSecretary} closeModal={()=> setRegisterModalData({...registerModalData,visible: false})}/>
-    </Modal>
-    <Modal visible={loginModalData.visible} centered>
-      <Login isSecretary={loginModalData.isSecretary} closeModal={()=> setLoginModalData({...loginModalData,visible: false})}/>
-    </Modal>
-    </div>
+      <Modal visible={registerModalData.visible} centered>
+        <Register isSecretary={registerModalData.isSecretary} closeModal={()=> setRegisterModalData({...registerModalData,visible: false})}/>
+      </Modal>
+      <Modal visible={loginModalData.visible} centered>
+        <Login isSecretary={loginModalData.isSecretary} closeModal={()=> setLoginModalData({...loginModalData,visible: false})}/>
+      </Modal>
+    </Page>
      
     ) 
 

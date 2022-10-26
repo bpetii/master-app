@@ -1,10 +1,10 @@
 import React from 'react';
-import {Drawer, List, Flex } from '@bpetii/uio-gui-library';
+import {Drawer, List, Flex, Page } from '@bpetii/uio-gui-library';
 
 const SecretaryPage = () => {
 
   return (
-    <>
+    <Page>
       <Flex height={'100%'}>
           <div
             style={{
@@ -28,7 +28,7 @@ const SecretaryPage = () => {
         </div>
         </Drawer>
      </Flex>
-      </>
+      </Page>
   )
 }
 

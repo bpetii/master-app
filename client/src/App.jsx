@@ -31,9 +31,7 @@ const App = () => {
   return (
     <>
       <MainNavigation />
-      <div style={{height:'calc(100vh - 135px)'}}>
         <Views />
-      </div>
       <Footer />
     </>
   );
