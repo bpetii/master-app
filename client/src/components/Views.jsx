@@ -9,10 +9,10 @@ const Views = () => {
     return(
         <BrowserRouter >
          <Routes>
-            <Route path='/' element={<PreLogin />} />
-            <Route element={<ProtectedRoutes />} >
-                <Route path="patient" element={<PatientPage />} />
-                <Route path="secretary" element={<SecretaryPage />} />
+            <Route exact path='/' element={<PreLogin />} />
+            <Route exact element={<ProtectedRoutes />} >
+                <Route exact path="/patient" element={<PatientPage />} />
+                <Route exact path="/secretary" element={<SecretaryPage />} />
             </Route>
             <Route path='*' element={<PreLogin />} />
         </Routes> 

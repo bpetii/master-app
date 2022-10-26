@@ -12,7 +12,7 @@ const userSlice = createSlice({
         logIn: (user, action) => {
             return {
                 ...user,
-                ...user.payload, // this is what we expect to get back from API call and login page input
+                ...action.payload, // this is what we expect to get back from API call and login page input
                 isLoggedIn: true, // we set this as true on login
               };
         },
@@ -42,6 +42,7 @@ export const authLogin = (email, password, isSecretary) => async dispatch => {
         body: JSON.stringify({email, password, isSecretary})
       });
       const parsedRes = await response.json();
+      console.log(parsedRes);
       if (parsedRes.access_token) {
         dispatch(logIn(parsedRes))
         return Promise.resolve();
