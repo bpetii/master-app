@@ -1,17 +1,26 @@
 
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { FaUser } from 'react-icons/fa';
-import {CgDarkMode} from 'react-icons/cg';
 import {TopBar, Menu, Button,} from '@bpetii/uio-gui-library';
-import { logOut } from '../../store/slices/userSlice';
+import { DarkModeSwitch } from 'react-toggle-dark-mode';
+import { logOut, toggleDarkMode } from '../../store/slices/userSlice';
 import i18n from 'i18next';
+import { useEffect } from 'react';
 
 const MainNavigation = () => {
     const [lang, setLang] = useState(i18n.language)
-    const [darkMode, setDarkMode] = useState('default');
+    const {isDarkMode} = useSelector(state => state.user);
     const dispatch = useDispatch();
 
+    console.log(isDarkMode);
+
+    useEffect(() => {
+      console.log('here')
+      const mode = isDarkMode ? 'dark' : 'default'
+      console.log(mode);
+      document.documentElement.setAttribute('data-theme', mode);
+    }, [isDarkMode])
 
   const content = [
     {
@@ -21,15 +30,13 @@ const MainNavigation = () => {
   ];
   const contentRight = [
       {
-        type: 'Button',
-        label: darkMode,
-        colored: true,
-        onClick: () => {
-          const mode = darkMode === 'default' ? 'dark' : 'default'
-
-          document.documentElement.setAttribute('data-theme', mode);
-          setDarkMode(mode);
-        },
+        type: 'Component',
+        component: 
+          <DarkModeSwitch
+            checked={isDarkMode || false}
+            onChange={() => { dispatch(toggleDarkMode()) }}
+            size={40}
+          />
       },
       {
         type: 'Component',

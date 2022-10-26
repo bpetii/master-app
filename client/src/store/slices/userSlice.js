@@ -6,24 +6,28 @@ const userSlice = createSlice({
         isLoggedIn: false,
         user: null,
         access_token: null,
+        isDarkMode: false
     },
     reducers: {
-        logIn: (state, action) => {
+        logIn: (user, action) => {
             return {
-                ...state,
-                ...action.payload, // this is what we expect to get back from API call and login page input
+                ...user,
+                ...user.payload, // this is what we expect to get back from API call and login page input
                 isLoggedIn: true, // we set this as true on login
               };
         },
-        logOut: (state) => {
-            state.user = null;
-            state.access_token = null;
-            state.isLoggedIn = false;
+        logOut: (user) => {
+          user.user = null;
+          user.access_token = null;
+          user.isLoggedIn = false;
+        },
+        toggleDarkMode: (user) => {
+          user.isDarkMode = !user.isDarkMode;
         }
     }
 })
 
-export const {logIn, logOut} = userSlice.actions;
+export const {logIn, logOut, toggleDarkMode} = userSlice.actions;
 
 const API_URL = "http://localhost:4000/api/";
 
