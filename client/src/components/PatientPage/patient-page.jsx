@@ -49,7 +49,8 @@ const filteredDoctors = doctorsFiltered(doctors, filters);
             style={{
               flexGrow: 1,
               display: 'flex',
-              alignItems: 'center'
+              alignItems: 'center',
+              justifyContent: 'center'
             }}
           >
            {selectedDoctor && <Schedule userid={userid} doctorid={selectedDoctor.id} />} 

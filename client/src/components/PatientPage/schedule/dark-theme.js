@@ -1,5 +1,5 @@
 //dark mode:
-export default {
+export const darkTheme = {
     primary: 'gold',
     secondary: 'slategrey',
     background: '#111', // This should match the container background

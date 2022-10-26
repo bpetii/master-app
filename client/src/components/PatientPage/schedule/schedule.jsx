@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import DayTimePicker from '@mooncake-dev/react-day-time-picker';
 import { createAppointments } from '../../../store/slices/appointmentsSlice';
 import {useTranslation} from 'react-i18next';
+import { darkTheme } from './dark-theme';
 
 const SLOT_MINUTES = 15;
 
@@ -11,6 +12,7 @@ const Schedule = ({userid, doctorid}) => {
   const {t} = useTranslation();
   const {loading, error, done} = useSelector(state => state.appointments)
   const {selectedDoctor} = useSelector(state => state.doctors)
+  const {isDarkMode} = useSelector(state => state.user);
   const dispatch = useDispatch();
 
   const handleScheduled = (datetime) => {
@@ -38,8 +40,26 @@ const Schedule = ({userid, doctorid}) => {
     return false;
   }
 
-  return (
-    <div className='container'>
+  const ThemeWrapper = () => {
+    if(isDarkMode) {
+      return (
+        <div className='dark'>
+          <DayTimePicker 
+            timeSlotSizeMinutes={SLOT_MINUTES} 
+            onConfirm={handleScheduled}
+            timeSlotValidator={timeSlotValidator}
+            isLoading={loading}
+            loadingText={t("loading")}
+            err={error}
+            doneText={t("doneText", {name: selectedDoctor.name})}
+            isDone={!error && done}
+            confirmText={t("schedule")}
+            theme={darkTheme}
+          />
+        </div>);
+    } else {
+      return(
+      <div className='light'>
       <DayTimePicker 
         timeSlotSizeMinutes={SLOT_MINUTES} 
         onConfirm={handleScheduled}
@@ -50,9 +70,19 @@ const Schedule = ({userid, doctorid}) => {
         doneText={t("doneText", {name: selectedDoctor.name})}
         isDone={!error && done}
         confirmText={t("schedule")}
-        
       />
     </div>);
+    }
+  
+  }
+
+  return (
+    <div className='container'>
+      {ThemeWrapper()}
+    </div>
+  )
+  
+ 
 }
 
 export default Schedule;

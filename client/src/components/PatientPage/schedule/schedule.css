@@ -1,14 +1,23 @@
 .container {
-    width: 475px;
-    margin: 1em auto;
-    padding: 1em;
-    background-color: #fff;
+  width: 475px;
+  margin: 1em auto;
+  text-align: center;
+  padding: 4px;
+  box-shadow: 0 2px 4px #00000018;
+  border: 1px solid #f0f0f0;
+  border-radius: 5px;
+}
+
+.container .dark {
+  background-color: #111;
+  color: #fff;
+};  
+
+
+.container .light {
+  background-color: #fff;
     color: #333;
-    border: 1px solid #f0f0f0;
-    border-radius: 5px;
-    text-align: center;
-    box-shadow: 0 2px 4px #00000018;
-    };  
+};  
 
   @media (max-width: 520px) {
    .container {
