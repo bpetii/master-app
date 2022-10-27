@@ -6,17 +6,19 @@ import Register from '../Register/Register';
  import Login from '../Login/Login';
 import { useEffect } from 'react';
 import { loadDoctors } from '../../store/slices/doctorsSlice';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 const PreLogin = () => {
   const {t} = useTranslation();
+  const {user} = useSelector(state => state.user)
   const [registerModalData, setRegisterModalData] = useState({visible: false, isSecretary: true});
   const [loginModalData, setLoginModalData] = useState({visible: false, isSecretary: true});
   const dispatch = useDispatch();
 
   useEffect(()=> {
+    if (!user) return;
     dispatch(loadDoctors())
-  }, [])
+  }, [user])
 
    return (
     <Page left='0'>

@@ -4,15 +4,15 @@ import {Drawer, List, Flex, Message, Loader, Spinner, Page} from '@bpetii/uio-gu
 import Schedule from './schedule/schedule';
 import './patient-page.css'
 import { DataFilter } from './data-filter/data-filter';
-import {  doctorSelected } from '../../store/slices/doctorsSlice';
 import { useState } from 'react';
 import { loadAppointments } from '../../store/slices/appointmentsSlice';
 
 const PatientPage = () => {
-  const {doctors, loading, error, selectedDoctor} = useSelector(state => state.doctors);
+  const {doctors, loading, error} = useSelector(state => state.doctors);
   const userid = useSelector(state => state.user.user.id);
   const dispatch = useDispatch();
   const [filters, setFilters] = useState({});
+  const [doctorId, setDoctorId] = useState(null);
 
   useEffect(() => {
     dispatch(loadAppointments(userid))
@@ -25,8 +25,8 @@ const PatientPage = () => {
       items: newList.map(({id, name}) => ({
         id: id,
         name: name,
-        onClick: () => dispatch(doctorSelected(id)),
-        active: selectedDoctor?.id === id
+        onClick: () => setDoctorId(id),
+        active: doctorId === id
       }))}
   };
 
@@ -42,7 +42,7 @@ const filteredDoctors = doctorsFiltered(doctors, filters);
     </div>);
 
   return (
-    <Page left='70' padding='0'>
+    <Page left='0' padding='0'>
       <Flex height={'100%'}>
           <div
             style={{
@@ -52,7 +52,7 @@ const filteredDoctors = doctorsFiltered(doctors, filters);
               justifyContent: 'center'
             }}
           >
-           {selectedDoctor && <Schedule userid={userid} doctorid={selectedDoctor.id} />} 
+           {doctorId && <Schedule userid={userid} doctorid={doctorId} />} 
           </div>
           <Drawer
             open

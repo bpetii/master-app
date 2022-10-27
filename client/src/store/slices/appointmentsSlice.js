@@ -1,6 +1,5 @@
 import {createSlice } from '@reduxjs/toolkit';
 import {apiCallBegan } from '../api';
-import {doctorSelected } from './doctorsSlice'
 
 const appointmentsSlice = createSlice({
     name: 'appointments',
@@ -27,13 +26,6 @@ const appointmentsSlice = createSlice({
           appointments.loading = false;
           appointments.error=action.payload.message;
         },
-    },
-    extraReducers: {
-      [doctorSelected.type]: (appointments, action) => {
-        appointments.loading = false;
-          appointments.done = false;
-          appointments.error= '';
-      },
     }
 })
 

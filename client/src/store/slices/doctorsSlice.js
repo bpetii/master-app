@@ -16,16 +16,12 @@ const doctorsSlice = createSlice({
         doctorsReceived: (doctors, action) => {
           doctors.doctors=action.payload;
           doctors.loading = false;
+          doctors.error=''
         },
         doctorsRequestFailed: (doctors, action) => {
           doctors.loading = false;
           doctors.error=action.payload.message;
         },
-        doctorSelected: (doctors, action) => {
-          const id =action.payload;
-          const selected = doctors.doctors.find(doctor=> doctor.id ===id);
-          doctors.selectedDoctor = selected;
-        }
     }
 })
 
@@ -33,7 +29,6 @@ export const {
   doctorsRequested, 
   doctorsReceived, 
   doctorsRequestFailed, 
-  doctorSelected
 } = doctorsSlice.actions;
 export default doctorsSlice.reducer;
 
