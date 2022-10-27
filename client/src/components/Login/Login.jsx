@@ -28,7 +28,7 @@ const Login = ({
 
     authLogin(email, password, isSecretary).then(() => {
       if (isSecretary) {
-        navigate('/secretary')
+        navigate('/secretary/profile')
       } else {
         navigate('/patient')
       }

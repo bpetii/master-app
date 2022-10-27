@@ -10,7 +10,7 @@ import api from './middlewares/api';
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['user']
+  whitelist: ['user', 'doctors']
 }
 
 const reducer = combineReducers({

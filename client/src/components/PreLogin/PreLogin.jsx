@@ -4,11 +4,19 @@ import { FaHospitalUser } from 'react-icons/fa';
 import { useTranslation } from 'react-i18next';
 import Register from '../Register/Register';
  import Login from '../Login/Login';
+import { useEffect } from 'react';
+import { loadDoctors } from '../../store/slices/doctorsSlice';
+import { useDispatch } from 'react-redux';
 
 const PreLogin = () => {
   const {t} = useTranslation();
   const [registerModalData, setRegisterModalData] = useState({visible: false, isSecretary: true});
   const [loginModalData, setLoginModalData] = useState({visible: false, isSecretary: true});
+  const dispatch = useDispatch();
+
+  useEffect(()=> {
+    dispatch(loadDoctors())
+  }, [])
 
    return (
     <Page left='0'>

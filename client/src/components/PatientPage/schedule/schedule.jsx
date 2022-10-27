@@ -11,8 +11,10 @@ const SLOT_MINUTES = 15;
 const Schedule = ({userid, doctorid}) => {
   const {t} = useTranslation();
   const {loading, error, done} = useSelector(state => state.appointments)
-  const {selectedDoctor} = useSelector(state => state.doctors)
+  const {doctors} = useSelector(state => state.doctors)
   const {isDarkMode} = useSelector(state => state.user);
+
+  const selectedDoctor = doctors.find(doctor => doctorid === doctor.id)
   const dispatch = useDispatch();
 
   const handleScheduled = (datetime) => {

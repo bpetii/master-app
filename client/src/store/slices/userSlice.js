@@ -6,7 +6,8 @@ const userSlice = createSlice({
         isLoggedIn: false,
         user: null,
         access_token: null,
-        isDarkMode: false
+        isDarkMode: false,
+        doctorid: null,
     },
     reducers: {
         logIn: (user, action) => {

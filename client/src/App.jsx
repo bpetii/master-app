@@ -1,6 +1,5 @@
 
 import React from 'react';
-import { matchPath } from 'react-router-dom';
 import Views from './components/Views';
 import {Footer, SideBar} from '@bpetii/uio-gui-library';
 import i18n from 'i18next';
@@ -10,6 +9,7 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 import {translationsEn, translationsFa, translationsHu} from './translations';
 import { useSelector } from 'react-redux';
 import { FaAngleDoubleRight } from 'react-icons/fa';
+import { navigate } from '@reach/router';
 
 
 
@@ -33,27 +33,22 @@ i18n
 
 const sections = [
   {
-    heading: 'First Heading',
+    heading: 'Secretay Menu',
     items: [
       {
-        label: 'Section A',
-        value: '/path/to/something',
-        onClick: () => {},
-        icon: <FaAngleDoubleRight />
+        label: 'Book Appoinment',
+        value: '/secretary/book',
+        onClick: () => {navigate('/secretary/book')},
+        icon: <FaAngleDoubleRight />,
+        isActive: true
       },
 
       {
-        label: 'Section C',
-        value: '/path/to/something',
-        onClick: () => {},
+        label: 'Patient Profile',
+        value: '/secretary/profile',
+        onClick: () => {navigate('/secretary/profile')},
         icon: <FaAngleDoubleRight />
 
-      },
-      {
-        label: 'Experimental Section',
-        value: '/path/to/something',
-        onClick: () => {},
-        icon: <FaAngleDoubleRight />
       },
     ],
   },
@@ -61,6 +56,7 @@ const sections = [
 
 
 const App = () => {
+  
   const {issecretary} = useSelector(state => state.user?.user || {});
   return (
     <>
@@ -68,7 +64,7 @@ const App = () => {
         {issecretary && (
         <SideBar
           options={{
-            title: 'Title',
+            title: 'Welcome!',
             sections:[...sections],
           }}
           bottom='75px'

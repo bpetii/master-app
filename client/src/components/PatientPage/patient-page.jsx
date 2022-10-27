@@ -4,7 +4,7 @@ import {Drawer, List, Flex, Message, Loader, Spinner, Page} from '@bpetii/uio-gu
 import Schedule from './schedule/schedule';
 import './patient-page.css'
 import { DataFilter } from './data-filter/data-filter';
-import { loadDoctors, doctorSelected } from '../../store/slices/doctorsSlice';
+import {  doctorSelected } from '../../store/slices/doctorsSlice';
 import { useState } from 'react';
 import { loadAppointments } from '../../store/slices/appointmentsSlice';
 
@@ -15,9 +15,8 @@ const PatientPage = () => {
   const [filters, setFilters] = useState({});
 
   useEffect(() => {
-    dispatch(loadDoctors())
     dispatch(loadAppointments(userid))
-  }, [])
+  }, [userid])
 
   const doctorsFiltered = (doctors, filters) => {
     let newList = [...doctors];
@@ -43,7 +42,7 @@ const filteredDoctors = doctorsFiltered(doctors, filters);
     </div>);
 
   return (
-    <Page left='0' padding='0'>
+    <Page left='70' padding='0'>
       <Flex height={'100%'}>
           <div
             style={{
