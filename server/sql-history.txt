@@ -1,10 +1,14 @@
 CREATE TABLE IF NOT EXISTS users (
-  id UUID NOT NULL DEFAULT uuid_generate_v1() UNIQUE,
+  id UUID NOT NULL DEFAULT uuid_generate_v1(),
+  doctorid UUID DEFAULT NULL,
   email character varying(30),
   name character varying(30),
   passhash character varying(255) NOT NULL,
   issecretary boolean NOT NULL,
-  CONSTRAINT users_id_pk PRIMARY KEY (id)
+  CONSTRAINT users_id_pk PRIMARY KEY (id),
+  CONSTRAINT fk_doctor 
+	FOREIGN KEY(doctorid)
+		REFERENCES doctors(id)
 );
 
 
@@ -24,5 +28,5 @@ CREATE TABLE IF NOT EXISTS appointments (
 	  userid UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
 	  datetime timestamp NOT NULL ,
 	  created timestamp NOT NULL,
-     CONSTRAINT appointments_id_pk PRIMARY KEY (id)
+    CONSTRAINT appointments_id_pk PRIMARY KEY (id)
 );

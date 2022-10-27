@@ -10,13 +10,13 @@ router.post('/', async (req, res) => {
     console.log(req.body);
   
     const user = await pool.query(
-      "SELECT id, name, passhash, email, issecretary FROM users u WHERE u.email=$1 AND u.issecretary=$2",
+      "SELECT id, name, doctorid, passhash, email, issecretary FROM users u WHERE u.email=$1 AND u.issecretary=$2",
       [email, isSecretary])
   
-      if (!user.rowCount) return res.status(400).json({ status: "Invalid email or password", username: null });
+      if (!user.rowCount) return res.status(400).json({ status: "Invalid email or password"});
         
       const isValidPassword = await bcrypt.compare(password, user.rows[0].passhash);
-      if(!isValidPassword) return res.status(400).json({ status: "Invalid email or password", ema: null })
+      if(!isValidPassword) return res.status(400).json({ status: "Invalid email or password"})
 
       const access_token = jwtGenerator(user.rows[0].id);
       res.header('x-auth-token', access_token).send({ access_token, user: omit(user.rows[0], ['passhash']) }) 
