@@ -44,7 +44,7 @@ router.get('/patients', async (req, res) => {
 router.get('/history', async (req, res) => {
   const {userid} = req.query;
   const userHistory = await pool.query(
-  `SELECT u.name as userName, d.name as doctorname, ap.datetime FROM users u
+  `SELECT u.id, u.name as username, u.email, d.name as doctorname, ap.datetime FROM users u
     JOIN appointments as ap on ap.userid=u.id
     JOIN doctors as d on d.id = ap.doctorid
     WHERE issecretary=false and u.id = $1`, [userid]);
