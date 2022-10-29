@@ -16,11 +16,11 @@ const persistor = persistStore(store);
 root.render(
   <React.StrictMode>
      <Provider store={store}>
-     <PersistGate loading={null} persistor={persistor}>
-     <Suspense fallback="loading"> 
-        <App />
-      </Suspense>
-        </PersistGate >
+      <PersistGate loading={null} persistor={persistor}>
+        <Suspense fallback="loading"> 
+          <App />
+        </Suspense>
+      </PersistGate >
     </Provider>
   </React.StrictMode>
 );

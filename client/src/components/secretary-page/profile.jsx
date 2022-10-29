@@ -5,9 +5,6 @@ import { useSelector } from 'react-redux';
 const headers=[{
   cells: [
     {
-      value: 'Patient Name'
-    },
-    {
       value: 'Doctor Name'
     },
     {
@@ -54,7 +51,6 @@ const Profile = () => {
     if (!selectedPatient) return;
     async function fetchData() {
       const history = await getHistory(selectedPatient.id,access_token);
-      console.log(history)
       setHistory(history);
     }
     fetchData();
@@ -74,34 +70,37 @@ const Profile = () => {
   };
 
   const rows = history.map(h => ({
-    cells:[{value: h.username}, {value: h.doctorname}, {value: h.datetime}]
+    cells:[{value: h.doctorname}, {value: h.datetime}]
   }))
 
   const filteredPatients = patientsFiltered();
 
   return (
     <Page left='70px' padding='0'>
-        <div>
-
-            <Field label='name'>
-                  <Input value={filterInput} onChange={e => setFilterInput(e.target.value)}/>
-            </Field>
-           
-          <div>
-            <Card raised>
-               <div style={{display: 'flex', justifyContent: 'space-between', height:'700px', gap:'50px'}}>
-                   <div style={{flexGrow: 0.5}}>
-                      <List bordered list={ filteredPatients} />
-                    </div>
-
+        <div style={{padding: '20px'}}>
+          <div style={{width: '165px'}}>
+          <Field label='name' labelWidth='50px'>
+              <Input value={filterInput} onChange={e => setFilterInput(e.target.value)}/>
+          </Field>           
+          </div>
+              <div style={{display: 'flex', justifyContent: 'space-between', height:'750px', gap:'25px'}}>
+                    <List bordered list={ filteredPatients} />
                     <div style={{display:'flex', flexDirection: 'column', flexGrow: 1}}>
-                      <div style={{flexGrow: 0.5}}>Details</div>
+                      <div style={{flexGrow: 0.5}}>
+                        <Field label='Patient id'>
+                            <Input value={selectedPatient?.id} disabled/>
+                        </Field>
+                        <Field label='Patient Name'>
+                            <Input value={selectedPatient?.name} onChange={e => setFilterInput(e.target.value)} disabled/>
+                        </Field>
+                        <Field label='Patient Email' >
+                            <Input value={selectedPatient?.email} onChange={e => setFilterInput(e.target.value)} disabled/>
+                        </Field>      
+                      </div>
                       <Divider />
                       <Table table={{headers, rows}} />
                   </div>
                 </div>
-              </Card>
-          </div>
         </div>
     </Page>
   )
