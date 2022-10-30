@@ -29,9 +29,10 @@ router.post('/', async (req, res) => {
 router.get('/', async (req, res) => {
   const {date} = req.query;
   const user = await pool.query(
-  `SELECT u.id, name, ap.datetime, u.doctorid, email, issecretary FROM users as u
-   JOIN appointments as ap on ap.userid = u.id
-    WHERE issecretary=false AND ap.datetime::TIMESTAMP::DATE = $1::TIMESTAMP::DATE`, [date]);
+  `SELECT u.id, u.name, d.name as doctorname, ap.datetime::TIMESTAMP, u.doctorid, email, issecretary FROM users as u
+  JOIN appointments as ap on ap.userid = u.id
+  JOIN doctors as d on ap.doctorid = d.id
+   WHERE issecretary=false AND ap.datetime::TIMESTAMP::DATE = $1::TIMESTAMP::DATE;`, [date]);
   res.json(user.rows);
 });
 
