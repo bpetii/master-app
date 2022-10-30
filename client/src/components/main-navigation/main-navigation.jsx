@@ -13,12 +13,8 @@ const MainNavigation = () => {
     const {isDarkMode} = useSelector(state => state.user);
     const dispatch = useDispatch();
 
-    console.log(isDarkMode);
-
     useEffect(() => {
-      console.log('here')
       const mode = isDarkMode ? 'dark' : 'default'
-      console.log(mode);
       document.documentElement.setAttribute('data-theme', mode);
     }, [isDarkMode])
 

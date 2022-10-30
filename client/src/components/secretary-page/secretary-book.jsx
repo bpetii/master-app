@@ -2,14 +2,21 @@ import React, {useState, useEffect} from 'react';
 import { List, Flex, Page, Drawer } from '@bpetii/uio-gui-library';
 import Schedule from '../PatientPage/schedule/schedule';
 import { useSelector } from 'react-redux';
-import DatePicker from 'react-date-picker';
-
+import { DayPicker } from 'react-day-picker';
+import { format, formatRelative  } from 'date-fns';
+import 'react-day-picker/dist/style.css';
+import i18n from 'i18next';
 
 
 const SecretaryPage = () => {
   const [patients, setPatiens] = useState([]);
   const [date, setDate] = useState(new Date());
  const { access_token} = useSelector(state => state.user.user);
+
+ const handleDaySelected = (date) => {
+  console.log(date);
+  setDate(date)
+ }
 
   useEffect(() => {
     fetch("http://localhost:4000/api/users?" + new URLSearchParams({date: date.toISOString()}),{
@@ -21,10 +28,15 @@ const SecretaryPage = () => {
     .then(res => res.json())
     .then(
       (result) => {
-        const formattedPatients = result.map(patient => ({...patient, metadata: patient.metadata=`${patient.doctorname} • ${new Date(patient.datetime).toLocaleTimeString()}`}));
+        const formattedPatients = result.map(patient => ({...patient, metadata: patient.metadata=`${patient.doctorname} • ${formatRelative(new Date(patient.datetime), new Date())}`}));
         setPatiens(formattedPatients);
       })
   }, [date])
+
+  let footer = <p>Please pick a day.</p>;
+  if (date) {
+    footer = <p>You picked {format(date, 'PP')}.</p>;
+  }
 
   return (
     <Page left='70px'>
@@ -34,7 +46,12 @@ const SecretaryPage = () => {
               flexGrow: 1,
             }}
           >
-      <DatePicker isOpen={true} onChange={(date) => setDate(date)} value={date}  />
+      <DayPicker
+      mode="single"
+      selected={date}
+      onSelect={handleDaySelected}
+      footer={footer}
+    />
       </div>
           <Drawer
             open

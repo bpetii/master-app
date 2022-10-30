@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import { List, Page, Field, Input, Card, Table, Divider } from '@bpetii/uio-gui-library';
 import { useSelector } from 'react-redux';
+import { format } from 'date-fns';
 
 const headers=[{
   cells: [
