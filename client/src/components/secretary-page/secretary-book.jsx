@@ -21,8 +21,8 @@ const SecretaryPage = () => {
     .then(res => res.json())
     .then(
       (result) => {
-        console.log(result)
-        setPatiens(result);
+        const formattedPatients = result.map(patient => ({...patient, metadata: patient.metadata=`${patient.doctorname} • ${new Date(patient.datetime).toLocaleTimeString()}`}));
+        setPatiens(formattedPatients);
       })
   }, [date])
 
