@@ -76,33 +76,34 @@ const Profile = () => {
 
   const filteredPatients = patientsFiltered();
 
+  //React responsive stuff for mobile (hook)
+  //css module @media
+
   return (
-    <Page left='70px' padding='0'>
-        <div style={{padding: '20px'}}>
-          <div style={{width: '165px'}}>
+    <Page left='70px' padding='20px'>
+      <div style={{display: 'grid', gridTemplateColumns: '300px 1fr', gap: '2rem'}}>
+        <div >
           <Field label='name' labelWidth='50px'>
-              <Input value={filterInput} onChange={e => setFilterInput(e.target.value)}/>
-          </Field>           
-          </div>
-              <div style={{display: 'flex', justifyContent: 'space-between', height:'750px', gap:'25px'}}>
-                    <List bordered list={ filteredPatients} />
-                    <div style={{display:'flex', flexDirection: 'column', flexGrow: 1}}>
-                      <div style={{flexGrow: 0.5}}>
-                        <Field label='Patient id'>
-                            <Input value={selectedPatient?.id} disabled/>
-                        </Field>
-                        <Field label='Patient Name'>
-                            <Input value={selectedPatient?.name} onChange={e => setFilterInput(e.target.value)} disabled/>
-                        </Field>
-                        <Field label='Patient Email' >
-                            <Input value={selectedPatient?.email} onChange={e => setFilterInput(e.target.value)} disabled/>
-                        </Field>      
-                      </div>
-                      <Divider />
-                      <Table table={{headers, rows}} />
-                  </div>
-                </div>
+            <Input value={filterInput} onChange={e => setFilterInput(e.target.value)}/> 
+          </Field>  
+          <List bordered list={ filteredPatients} />        
         </div>
+          <div>
+            <div>
+              <Field label='Patient id'>
+                <Input value={selectedPatient?.id} disabled/>
+              </Field>
+              <Field label='Patient Name'>
+                <Input value={selectedPatient?.name} onChange={e => setFilterInput(e.target.value)} disabled/>
+              </Field>
+              <Field label='Patient Email' >
+                <Input value={selectedPatient?.email} onChange={e => setFilterInput(e.target.value)} disabled/>
+              </Field>      
+            </div>
+            <Divider> Appointments</Divider>
+            <Table table={{headers, rows}} />
+        </div>
+      </div>
     </Page>
   )
 }

@@ -12,11 +12,13 @@ const SecretaryPage = () => {
   const [patients, setPatiens] = useState([]);
   const [date, setDate] = useState(new Date());
  const { access_token} = useSelector(state => state.user.user);
-
- const handleDaySelected = (date) => {
+/*   console.log(new Date())
   console.log(date);
-  setDate(date)
- }
+  console.log(date.toISOString()); */
+  const handleDaySelected = (date) => {
+    //TODO manipulate the date 
+    setDate(date)
+  }
 
   useEffect(() => {
     fetch("http://localhost:4000/api/users?" + new URLSearchParams({date: date.toISOString()}),{
@@ -39,7 +41,7 @@ const SecretaryPage = () => {
   }
 
   return (
-    <Page left='70px'>
+    <Page left='70px' padding='0'>
       <Flex height='100%'>
       <div
             style={{
