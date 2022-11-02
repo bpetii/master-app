@@ -30,3 +30,14 @@ CREATE TABLE IF NOT EXISTS appointments (
 	  created timestamp NOT NULL,
     CONSTRAINT appointments_id_pk PRIMARY KEY (id)
 );
+
+CREATE TABLE IF NOT EXISTS workplan (
+	  id UUID NOT NULL DEFAULT uuid_generate_v1(),
+	  secretaryid UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+	  "from" TIME NOT NULL ,
+	  "to" TIME NOT NULL,
+    number INT,
+    comments TEXT,
+    datetime timestamp NOT NULL,
+    CONSTRAINT workplan_id_pk PRIMARY KEY (id)
+);
