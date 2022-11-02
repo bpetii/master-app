@@ -6,6 +6,8 @@ import PreLogin from './PreLogin/PreLogin';
 import SecretaryViews from './secretary-page/secretary-views';
 import SecretaryBook from './secretary-page/secretary-book';
 import SecretaryProfile from './secretary-page/profile';
+import Workplan from './secretary-page/workplan';
+import FinancialReport from './secretary-page/financial-report';
 
 const Views = () => {
     return(
@@ -17,6 +19,8 @@ const Views = () => {
                 <Route exact path="/secretary" element={<SecretaryViews />}>
                     <Route exact path="/secretary/book" element={<SecretaryBook />} />
                     <Route exact path="/secretary/profile" element={<SecretaryProfile/>} />
+                    <Route exact path="/secretary/workplan" element={<Workplan/>} />
+                    <Route exact path="/secretary/financial-report" element={<FinancialReport/>} />
                 </Route>
             </Route>
             <Route path='*' element={<PreLogin />} />

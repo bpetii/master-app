@@ -1,6 +1,7 @@
 import React, { useState }  from 'react';
 import {Flex, Icon, Button, Modal, Page} from '@bpetii/uio-gui-library';
 import { FaHospitalUser } from 'react-icons/fa';
+import {FaUserMd} from 'react-icons/fa';
 import { useTranslation } from 'react-i18next';
 import Register from '../Register/Register';
  import Login from '../Login/Login';
@@ -28,16 +29,22 @@ const PreLogin = () => {
           height="100vh"
           justifyContent="center"
         >
+          <div style={{marginBottom: '60px'}}>
+
+
             <Flex direction="column">
-              <Icon icon={<FaHospitalUser />} size="200px"/>
+            <div style={{marginBottom: '15px'}}>
+              <Icon icon={<FaUserMd />} size="200px"/>
+            </div>
               <Flex direction="column">
                 <Button label={t("login")} onClick={()=> setLoginModalData({visible:true, isSecretary: true})} />
               </Flex>
             </Flex>
+            </div>
             
             <Flex direction="column">
               <Icon icon={<FaHospitalUser />} size="200px"/>
-              <Flex direction="column"  gap='10px'>
+              <Flex direction="column" gap='10px'>
                 <Button label={t("login")} onClick={()=> setLoginModalData({visible:true, isSecretary: false})} />
                 <Button label={t("register")} onClick={() => setRegisterModalData({visible:true, isSecretary:false})} />
               </Flex>

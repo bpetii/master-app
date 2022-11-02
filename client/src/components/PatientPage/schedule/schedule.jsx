@@ -26,9 +26,26 @@ const Schedule = ({userid, doctorid}) => {
     dispatch(createAppointments(payload))
   }
 
-  function timeSlotValidator(slotTime) {
-    const {from, to} = selectedDoctor;
+  const formatAppoinmentDate = (isoDate) => {
+    const date = new Date(isoDate);
+    const year = date.getFullYear();
+    let month = date.getMonth()+1;
+    let dt = date.getDate();
 
+    if (dt < 10) {
+      dt = '0' + dt;
+    }
+    if (month < 10) {
+      month = '0' + month;
+    }
+
+    console.log(year+'-' + month + '-'+dt, date.getHours(), date.getMinutes());
+  }
+
+  function timeSlotValidator(slotTime) {
+    const {from, to, appointments} = selectedDoctor;
+    
+    formatAppoinmentDate(appointments[0]);
     const [fromHour, fromMinute] = from.split(':');
     const [toHour, toMinute] = to.split(':');
 

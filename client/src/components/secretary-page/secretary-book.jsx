@@ -12,9 +12,6 @@ const SecretaryPage = () => {
   const [patients, setPatiens] = useState([]);
   const [date, setDate] = useState(new Date());
  const { access_token} = useSelector(state => state.user.user);
-/*   console.log(new Date())
-  console.log(date);
-  console.log(date.toISOString()); */
   const handleDaySelected = (date) => {
     //TODO manipulate the date 
     setDate(date)
