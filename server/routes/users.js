@@ -53,13 +53,26 @@ router.get('/history', async (req, res) => {
 });
 
 router.get('/financial', async (req, res) => {
-  const {doctorid, datetime} = req.query;
-  const patients = await pool.query(
-  `SELECT u.id, u.name, app.datetime, money FROM doctors as d
-  JOIN appointments as app on app.doctorid = d.id
-  JOIN users as u on u.id= app.userid
-  WHERE d.id=$1 AND app.datetime::TIMESTAMP::DATE = $2::TIMESTAMP::DATE`, [doctorid, datetime]);
-  res.json(patients.rows);
+  console.log(req.query);
+  const {doctorid, isMultiple, datetime, from, to} = req.query;
+  if (isMultiple==="true") {
+    const patients = await pool.query(
+      `SELECT u.id, u.name, app.datetime, money FROM doctors as d
+      JOIN appointments as app on app.doctorid = d.id
+      JOIN users as u on u.id= app.userid
+      WHERE d.id=$1 AND app.datetime::TIMESTAMP::DATE BETWEEN $2::TIMESTAMP::DATE 
+	  	AND $3::TIMESTAMP::DATE`, [doctorid, from, to]);
+    
+    res.json(patients.rows);
+  } else {
+    const patients = await pool.query(
+      `SELECT u.id, u.name, app.datetime, money FROM doctors as d
+      JOIN appointments as app on app.doctorid = d.id
+      JOIN users as u on u.id= app.userid
+      WHERE d.id=$1 AND app.datetime::TIMESTAMP::DATE = $2::TIMESTAMP::DATE`, [doctorid, datetime]);
+    
+    res.json(patients.rows);
+  }
 });
 
 module.exports = router;
