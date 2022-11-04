@@ -18,6 +18,7 @@ CREATE TABLE IF NOT EXISTS doctors (
   name character varying (50),
   city character varying (50),
   expertise character varying (50),
+  money decimal NOT NULL,
   CONSTRAINT doctors_id_pk PRIMARY KEY (id)
 );
 

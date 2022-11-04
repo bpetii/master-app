@@ -52,4 +52,14 @@ router.get('/history', async (req, res) => {
   res.json(userHistory.rows);
 });
 
+router.get('/financial', async (req, res) => {
+  const {doctorid, datetime} = req.query;
+  const patients = await pool.query(
+  `SELECT u.id, u.name, app.datetime, money FROM doctors as d
+  JOIN appointments as app on app.doctorid = d.id
+  JOIN users as u on u.id= app.userid
+  WHERE d.id=$1 AND app.datetime::TIMESTAMP::DATE = $2::TIMESTAMP::DATE`, [doctorid, datetime]);
+  res.json(patients.rows);
+});
+
 module.exports = router;
