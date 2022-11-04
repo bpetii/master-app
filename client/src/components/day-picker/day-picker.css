@@ -1,0 +1,32 @@
+ .my-selected:not([disabled]) { 
+    font-weight: bold; 
+    
+    border: 2px solid currentColor;
+  }
+  .my-selected:hover:not([disabled]) { 
+    border-color: var(--color-background-primary);
+    color: var(--color-background-primary);
+    background-color: white !important
+  }
+  .my-today { 
+    font-weight: bold;
+    font-size: 140%; 
+    color: red;
+  }
+  .rdp {
+    --rdp-cell-size: 60px;
+    --rdp-accent-color: red;
+    --rdp-background-color: var(--color-border);
+    /* Switch to dark colors for dark themes */
+    --rdp-accent-color-dark: #3003e1;
+    --rdp-background-color-dark: #180270;
+    /* Outline border for focused elements */
+    --rdp-outline: 2px solid var(--rdp-accent-color);
+    /* Outline border for focused and selected elements */
+    --rdp-outline-selected: 2px solid rgba(0, 0, 0, 0.75);
+    color: var(--color-text)
+  }
+
+  .rdp-day_range_middle.my-selected, .rdp-day_range_start.my-selected, .rdp-day_range_end.my-selected  {
+    border: 1px solid currentColor !important;
+  }

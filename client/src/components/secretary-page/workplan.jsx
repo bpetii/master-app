@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { Field, Input, Page, Card, TextArea, Button} from '@bpetii/uio-gui-library';
 import { DayPicker } from 'react-day-picker';
 import { format  } from 'date-fns';
+import { CustomDayPicker } from '../day-picker/day-picker';
 
 
 const getWorkPlan = (userid, access_token, datetime) => {
@@ -58,18 +59,13 @@ const Workplan = () => {
     })
   }
 
-  let footer = <p>Please pick a day.</p>;
-  if (datetime) {
-    footer = <p>You picked {format(datetime, 'PP')}.</p>;
-  }
   return (
     <Page left='70px' padding='0'>
       <div style={{display: 'grid', gridTemplateColumns: '500px 1fr', gap: '2rem', margin: 'auto 100px'}}>
-          <DayPicker
-          mode="single"
-          selected={datetime}
-          onSelect={handleDaySelected}
-          footer={footer}
+          <CustomDayPicker
+            mode="single"
+            value={datetime}
+            onSelect={handleDaySelected}
         />
         <Card heading={<h3>{format(datetime, 'PP')}</h3>}>
           <Field label="From">

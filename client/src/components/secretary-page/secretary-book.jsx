@@ -6,6 +6,7 @@ import { DayPicker } from 'react-day-picker';
 import { format, formatRelative  } from 'date-fns';
 import 'react-day-picker/dist/style.css';
 import i18n from 'i18next';
+import { CustomDayPicker } from '../day-picker/day-picker';
 
 
 const SecretaryPage = () => {
@@ -32,11 +33,6 @@ const SecretaryPage = () => {
       })
   }, [date])
 
-  let footer = <p>Please pick a day.</p>;
-  if (date) {
-    footer = <p>You picked {format(date, 'PP')}.</p>;
-  }
-
   return (
     <Page left='70px' padding='0'>
       <Flex height='100%'>
@@ -45,11 +41,10 @@ const SecretaryPage = () => {
               flexGrow: 1,
             }}
           >
-      <DayPicker
-      mode="single"
-      selected={date}
-      onSelect={handleDaySelected}
-      footer={footer}
+      <CustomDayPicker
+        mode="single"
+        value={date}
+        onSelect={handleDaySelected}
     />
       </div>
           <Drawer
