@@ -1,5 +1,6 @@
 import React from 'react';
 import { DayPicker } from 'react-day-picker';
+import { Card} from '@bpetii/uio-gui-library';
 import { format } from 'date-fns';
 import './day-picker.css';
 import {faIR, enUS} from 'date-fns/locale';
@@ -40,7 +41,8 @@ export const CustomDayPicker =({value, onSelect, mode='single'}) => {
        
     }
     return(
-        <DayPicker
+      <Card border heading={<h3> Calendar</h3>}>
+         <DayPicker
           mode={mode}
           selected={value}
           onSelect={onChange}
@@ -51,7 +53,8 @@ export const CustomDayPicker =({value, onSelect, mode='single'}) => {
           locale={language === 'fa' ? faIR : enUS}
           dir= {language === 'fa' ?'rtl' : ''}
           footer={mode === 'single'? singleFooter : rangeFotter}
-      />
+        />
+      </Card>
     )
   
 }

@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { List, Page, Field, Input, Card, Table, Divider } from '@bpetii/uio-gui-library';
+import { List, Page, Field, Input, Text, Table, Divider } from '@bpetii/uio-gui-library';
 import { useSelector } from 'react-redux';
 import { format } from 'date-fns';
 
@@ -100,7 +100,11 @@ const Profile = () => {
                 <Input value={selectedPatient?.email} onChange={e => setFilterInput(e.target.value)} disabled/>
               </Field>      
             </div>
-            <Divider> Appointments</Divider>
+            <Divider>
+              <Text>
+               Appointments
+              </Text>
+            </Divider>
             <Table table={{headers, rows}} />
         </div>
       </div>
