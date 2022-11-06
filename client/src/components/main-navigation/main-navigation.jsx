@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { FaUser } from 'react-icons/fa';
 import {TopBar, Menu, Button,} from '@bpetii/uio-gui-library';
-import { DarkModeSwitch } from 'react-toggle-dark-mode';
+import DarkModeToggle from '../dark-mode-toggle/dark-mode-toggle';
 import { logOut, toggleDarkMode } from '../../store/slices/userSlice';
 import i18n from 'i18next';
 import { useEffect } from 'react';
@@ -28,10 +28,8 @@ const MainNavigation = () => {
       {
         type: 'Component',
         component: 
-          <DarkModeSwitch
-            checked={isDarkMode || false}
+          <DarkModeToggle
             onChange={() => { dispatch(toggleDarkMode()) }}
-            size={40}
           />
       },
       {
