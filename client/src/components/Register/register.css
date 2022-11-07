@@ -46,7 +46,7 @@
     background-color: tomato;
     position: absolute;
     top: 16px;
-    left: 60%;
+    left: 61%;
 }
 .multi-steps > li:last-child:after {
     display: none;
