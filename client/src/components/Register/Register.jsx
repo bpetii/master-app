@@ -60,10 +60,9 @@ const Register = ({
             value={password}
             />
         </Field>
-      </>)
-  }
+      </>
+    )};
   
-
   const AddressForm = {
     title: 'Address form',
     component: (<>
@@ -88,10 +87,9 @@ const Register = ({
          onChange={()=>{}}
        />
      </Field>
-     </>)
-  }
+     </>
+    )};
   
-
   const UserForm ={
     title: 'User form',
     component: ( <>
@@ -109,20 +107,19 @@ const Register = ({
          onChange={()=>{}}
        />
      </Field>
-     </>)
-  }
+     </>
+    )};
  
-
     const {steps, currentStepIndex, step, isFirstStep,isLastStep, back, next} = useMultistepForm([UserForm, AddressForm,AccountForm])
     const registerContent = (
-       <div style={{ position: 'relative', width:'500px', paddingTop:'30px'}}>
-            <ul className="multi-steps">
-              {steps.map((step,ix)=> (
-                <li className={ix === currentStepIndex && 'is-active' }>{step.title}</li>
-              ))}
-            </ul>
+       <div style={{ width:'500px'}}>
+          <ul className="multi-steps">
+            {steps.map((step,ix)=> (
+              <li className={ix === currentStepIndex && 'is-active' }>{step.title}</li>
+           ))}
+        </ul>
         {step.component}
-       </div>);
+      </div>);
 
 
  return (
