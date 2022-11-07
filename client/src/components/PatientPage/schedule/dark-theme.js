@@ -2,7 +2,7 @@
 export const darkTheme = {
     primary: 'gold',
     secondary: 'slategrey',
-    background: '#111', // This should match the container background
+    background: 'var(--color-background)', // This should match the container background
     buttons: {
       disabled: {
         color: '#333',

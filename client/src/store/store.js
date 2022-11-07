@@ -6,6 +6,7 @@ import { persistReducer } from 'redux-persist'
 import { combineReducers } from '@reduxjs/toolkit';
 import storage from 'redux-persist/lib/storage'
 import api from './middlewares/api';
+import ui from './slices/uiSlice';
 
 const persistConfig = {
   key: 'root',
@@ -16,7 +17,8 @@ const persistConfig = {
 const reducer = combineReducers({
   user: user,
   doctors: doctors,
-  appointments: appointments
+  appointments: appointments,
+  ui: ui
 })
 
 const persistedReducer = persistReducer(persistConfig, reducer) 

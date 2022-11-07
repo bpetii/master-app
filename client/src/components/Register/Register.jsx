@@ -35,7 +35,7 @@ const Register = ({
 
   const registerContent = ( 
     <> 
-      <Field label={t("name")}>
+      <Field label={'*' + t("name")}>
           <Input 
             name='name'
             placeholder={t("enterYourName")}
@@ -46,7 +46,7 @@ const Register = ({
             value={name}
           /> 
         </Field>
-      <Field label={t("email")} >
+      <Field label={'*' + t("email")} >
           <Input 
             name='email'
             placeholder={t("enterYourEmail")}
@@ -57,7 +57,7 @@ const Register = ({
             value={email}
           />
         </Field>
-          <Field label={t("password")}>
+          <Field label={'*' + t("password")}>
             <Input 
               name='password'
               type='password'

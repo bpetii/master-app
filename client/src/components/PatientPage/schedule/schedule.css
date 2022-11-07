@@ -6,16 +6,17 @@
   box-shadow: 0 2px 4px #00000018;
   border: 1px solid #f0f0f0;
   border-radius: 5px;
+  background-color: var(--color-background);
 }
 
 .container .dark {
-  background-color: #111;
+  background-color: var(--color-background);
   color: #fff;
 };  
 
 
 .container .light {
-  background-color: #fff;
+  background-color: var(--color-background);
     color: #333;
 };  
 

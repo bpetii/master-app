@@ -4,15 +4,15 @@ import './dark-mode-toggle.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSun, faMoon } from '@fortawesome/free-solid-svg-icons'
 
-const DarkModeToggle = ({onChange}) => {
+const DarkModeToggle = ({onChange, checked = false}) => {
 
   return(
-    <div onChange={onChange} class="dark-mode-toggle">
-      <input type="checkbox" class="checkbox" id="checkbox" />
-      <label for="checkbox" class="label">
+    <div className="dark-mode-toggle">
+      <input onChange={onChange} type="checkbox" className="checkbox" id="checkbox" checked={checked}/>
+      <label htmlFor="checkbox" className="label">
       <FontAwesomeIcon icon={faSun}/>
       <FontAwesomeIcon icon={faMoon} />
-      <div class='ball' />
+      <div className='ball' />
       </label>
     </div>
   )

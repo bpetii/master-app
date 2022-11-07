@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import {useSelector} from 'react-redux'
 import { useNavigate } from "react-router";
 import './login.css';
 import { connect } from 'react-redux';
@@ -11,6 +12,7 @@ const Login = ({
   isSecretary,
   closeModal
 }) => {
+  const {showInfo} = useSelector(state => state.ui);
   const {t} = useTranslation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -50,7 +52,7 @@ const Login = ({
   const loginContent = (
   <>
    {errorMessage}
-     <Field label={t("email")}>
+     <Field label={'*' + t("email")} info={showInfo && 'Your email address'}>
       <Input
         name='email'
         placeholder={t("enterYourEmail")}
@@ -60,7 +62,7 @@ const Login = ({
         error={!email ? "error" : null}
         value={email} />
     </Field>
-    <Field label={t("password")}>
+    <Field label={'*' + t("password")} info={showInfo && 'Your password'}>
         <Input
           name='password'
           type='password'

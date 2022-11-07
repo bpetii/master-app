@@ -53,7 +53,7 @@ const FinancialReport = () => {
  
   return (
     <Page left='70px' padding='0'>
-        <div style={{display: 'grid', gridTemplateColumns: '500px 1fr', gap: '2rem', margin: 'auto 100px'}}>
+        <div style={{display: 'grid', gridTemplateColumns: '500px 500px', gap: '2rem', margin: 'auto 100px', justifyContent: 'center'}}>
           <div>
             <Toggle label="Use range" onChange={() => setMultiple(prev=> !prev)} checked={isMultiple}/>
             <CustomDayPicker
@@ -62,19 +62,18 @@ const FinancialReport = () => {
               onSelect={isMultiple ? setRange : setDatetime}
            />
           </div> 
-        <div style={{display: 'flex', gap: '30px', flexDirection: 'column'}}>
+        <div style={{display: 'flex', gap: '30px', flexDirection: 'column', justifyContent: 'space-between', marginBottom: '-14px', marginTop: '40px'}}>
           <List 
             list={patients}
           />
           <Field label="Total: ">
-                <Input
-                name='from'
-                type='text'
-                value={sum} 
-                disabled
-                />
-
-            </Field>
+            <Input
+              name='from'
+              type='text'
+              value={sum} 
+              disabled
+            />
+          </Field>
         </div>
       </div>
     </Page>

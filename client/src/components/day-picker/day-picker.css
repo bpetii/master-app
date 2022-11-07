@@ -11,11 +11,11 @@
   .my-today { 
     font-weight: bold;
     font-size: 140%; 
-    color: red;
+    color: var(--color-background-primary);
   }
   .rdp {
     --rdp-cell-size: 60px;
-    --rdp-accent-color: red;
+    --rdp-accent-color: var(--color-background-primary);
     --rdp-background-color: var(--color-border);
     /* Switch to dark colors for dark themes */
     --rdp-accent-color-dark: #3003e1;

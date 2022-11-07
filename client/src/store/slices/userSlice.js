@@ -79,10 +79,6 @@ export const authLogin = (email, password, isSecretary) => async dispatch => {
     }
 }
 
-export const logout = () => async dispatch => {
-  dispatch(logOut);
-}
-
 export default userSlice.reducer;
 
 export const selectCurrentUser = (state) => state.user.user;

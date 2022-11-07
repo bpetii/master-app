@@ -2,8 +2,9 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { FaUser } from 'react-icons/fa';
-import {TopBar, Menu, Button,} from '@bpetii/uio-gui-library';
+import {TopBar, Menu, Button, Toggle} from '@bpetii/uio-gui-library';
 import DarkModeToggle from '../dark-mode-toggle/dark-mode-toggle';
+import { toggleShowInfo, toggleShowDarkMode, toggleShowLanguage } from '../../store/slices/uiSlice';
 import { logOut, toggleDarkMode } from '../../store/slices/userSlice';
 import i18n from 'i18next';
 import { useEffect } from 'react';
@@ -11,6 +12,7 @@ import { useEffect } from 'react';
 const MainNavigation = () => {
     const [lang, setLang] = useState(i18n.language)
     const {isDarkMode} = useSelector(state => state.user);
+    const {showInfo, showDarkMode, showLanguage} = useSelector(state => state.ui);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -25,14 +27,15 @@ const MainNavigation = () => {
       },
   ];
   const contentRight = [
-      {
+      ...showDarkMode? [{
         type: 'Component',
         component: 
           <DarkModeToggle
+            checked = {isDarkMode}
             onChange={() => { dispatch(toggleDarkMode()) }}
           />
-      },
-      {
+      }]: [{}],
+      ...showLanguage ? [{
         type: 'Component',
         component: <Menu menu={{
           sections: [
@@ -67,17 +70,42 @@ const MainNavigation = () => {
       }}/>,
         label: i18n.language,
         colored: true,
-      },
+      }]: [{}],
   {
     type: 'Component',
     component: (
         <Menu menu={{
             sections: [
-              {
-                  label: 'Logout',
-                  onClick: () => dispatch(logOut()),
-                  type: 'Option'
-              }],
+            {
+              label: 'Logout',
+              onClick: () => dispatch(logOut()),
+              type: 'Option'
+            },
+            {
+              label: <Toggle
+              label="Show info"
+              checked={showInfo}
+              onChange={()=> dispatch(toggleShowInfo())}
+              />,
+              type: 'Option'
+            },
+            {
+              label: <Toggle
+              label="Show dark mode"
+              checked={showDarkMode}
+              onChange={()=> dispatch(toggleShowDarkMode())}
+              />,
+              type: 'Option'
+            },
+            {
+              label: <Toggle
+              label="Show language"
+              checked={showLanguage}
+              onChange={()=> dispatch(toggleShowLanguage())}
+               />,
+               type: 'Option'
+            },
+            ],
             component: (<Button label={<FaUser />} round />),
             left: true
             }}/>
