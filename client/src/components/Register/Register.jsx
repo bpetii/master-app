@@ -13,13 +13,18 @@ const Register = ({
   closeModal
 }) => {
   const {t} = useTranslation();
-  const [email, setEmail] = useState('');
-  const [name, setName] = useState('');
+
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [city, setCity] = useState('');
+  const [zip, setZip] = useState('');
+  const [address, setAddress] = useState('');
   const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('');
 	const navigate = useNavigate();
 
   const validateForm = () => {
-    return !name || !email || !password;
+    return !firstName || !lastName || !email || !password ;
   }
 
   const handleSubmit = async (evt) => {
@@ -27,7 +32,7 @@ const Register = ({
     if (validateForm()) return;
 
     try {
-      await authRegister(name, email, password, isSecretary);
+      await authRegister({firstName, lastName, address, zip, city, email, password, isSecretary,});
       navigate('/patient/')
     } catch (err){
       console.error(err);
@@ -68,23 +73,32 @@ const Register = ({
     component: (<>
       <Field label='City'>
        <Input
-         name='City'
-         placeholder='city'
-         onChange={()=>{}}
+         name='city'
+         placeholder='Entery your city'
+         onChange={(evt)=>{
+          setCity(evt.target.value)
+         }}
+         value={city}
        />
      </Field>
      <Field label='Zip'>
        <Input
-         name='Zip'
-         placeholder='zip'
-         onChange={()=>{}}
+         name='zip'
+         placeholder='Enter your zip'
+         onChange={(evt)=>{
+          setZip(evt.target.value)
+         }}
+         value={zip}
        />
      </Field>
      <Field label='Address'>
        <Input
-         name='Address'
-         placeholder='address'
-         onChange={()=>{}}
+         name='address'
+         placeholder='Enter your address'
+         onChange={(evt)=>{
+          setAddress(evt.target.value)
+         }}
+         value={address}
        />
      </Field>
      </>
@@ -93,29 +107,35 @@ const Register = ({
   const UserForm ={
     title: 'User form',
     component: ( <>
-      <Field label='First name'>
+      <Field label='*First name'>
        <Input
-         name='Name'
-         placeholder='name'
-         onChange={()=>{}}
+         name='firstName'
+         placeholder='Enter your first name'
+         onChange={(evt)=>{
+          setFirstName(evt.target.value)
+         }}
+         value={firstName}
        />
      </Field>
-     <Field label='Last name'>
+     <Field label='*Last name'>
        <Input
-         name='Last name'
-         placeholder='last name'
-         onChange={()=>{}}
+         name='lastName'
+         placeholder='Enter your last name'
+         onChange={(evt)=>{
+          setLastName(evt.target.value)
+         }}
+         value={lastName}
        />
      </Field>
      </>
     )};
  
-    const {steps, currentStepIndex, step, isFirstStep,isLastStep, back, next} = useMultistepForm([UserForm, AddressForm,AccountForm])
+    const {steps, currentStepIndex, step, isFirstStep,isLastStep, back, next, goTo} = useMultistepForm([UserForm, AddressForm,AccountForm])
     const registerContent = (
        <div style={{ width:'500px'}}>
           <ul className="multi-steps">
             {steps.map((step,ix)=> (
-              <li className={ix === currentStepIndex && 'is-active' }>{step.title}</li>
+              <li onClick={() => goTo(ix)} className={ix === currentStepIndex && 'is-active' }>{step.title}</li>
            ))}
         </ul>
         {step.component}
@@ -130,7 +150,7 @@ const Register = ({
         footer: ( 
         <>
         {!isFirstStep ? <Button onClick={back} label='Back' /> : <Button onClick={() => closeModal()} label='Close'/>}
-        {isLastStep ? <Button onClick={handleSubmit} label={'Create Account'}/> : <Button onClick={next} label={'Next'}/>}
+        {isLastStep ? <Button onClick={handleSubmit} label={'Create Account'} disabled={validateForm()}/> : <Button onClick={next} label={'Next'}/>}
         </>
         ),
         onClose: closeModal,

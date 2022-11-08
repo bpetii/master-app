@@ -11,7 +11,7 @@ import { useEffect } from 'react';
 
 const MainNavigation = () => {
     const [lang, setLang] = useState(i18n.language)
-    const {isDarkMode} = useSelector(state => state.user);
+    const {isDarkMode, isLoggedIn} = useSelector(state => state.user);
     const {showInfo, showDarkMode, showLanguage} = useSelector(state => state.ui);
     const dispatch = useDispatch();
 
@@ -77,9 +77,8 @@ const MainNavigation = () => {
         <Menu menu={{
             sections: [
             {
-              label: 'Logout',
-              onClick: () => dispatch(logOut()),
-              type: 'Option'
+              label: 'Setting',
+              type: 'Heading'
             },
             {
               label: <Toggle
@@ -105,6 +104,14 @@ const MainNavigation = () => {
                />,
                type: 'Option'
             },
+            ...isLoggedIn? [{
+              type: 'Divider'
+            },
+           {
+              label: 'Logout',
+              onClick: () => dispatch(logOut()),
+              type: 'Option'
+            }]: []
             ],
             component: (<Button label={<FaUser />} round />),
             left: true

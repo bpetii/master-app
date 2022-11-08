@@ -55,7 +55,7 @@ export const authLogin = (email, password, isSecretary) => async dispatch => {
     }
   }
 
-  export const authRegister = (name, email, password, isSecretary) => async dispatch => {
+  export const authRegister = ({firstName, lastName, city, zip, address, email, password, isSecretary}) => async dispatch => {
     try {
 
         const response = await fetch(API_URL + 'users', {
@@ -64,7 +64,7 @@ export const authLogin = (email, password, isSecretary) => async dispatch => {
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify({name, email, password, isSecretary})
+            body: JSON.stringify({firstName, lastName, city, zip, address, email, password, isSecretary})
           });
       
           const parsedRes = await response.json();

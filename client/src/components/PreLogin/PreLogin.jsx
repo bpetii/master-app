@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 const PreLogin = () => {
   const {t} = useTranslation();
-  const {user} = useSelector(state => state.user)
+  const {user, isDarkMode} = useSelector(state => state.user)
   const [registerModalData, setRegisterModalData] = useState({visible: false, isSecretary: true});
   const [loginModalData, setLoginModalData] = useState({visible: false, isSecretary: true});
   const dispatch = useDispatch();
@@ -23,32 +23,35 @@ const PreLogin = () => {
 
    return (
     <Page left='0'>
+      <h1 style={{textAlign: 'center', fontSize:'3rem', color: 'var(--color-text)'}}>Secretary Management Application</h1>
       <Flex 
           gap="300px" 
           alignItems="center"
           height="100vh"
           justifyContent="center"
         >
-          <div style={{marginBottom: '60px'}}>
-
-
-            <Flex direction="column">
-            <div style={{marginBottom: '15px'}}>
-              <Icon icon={<FaUserMd />} size="200px"/>
+          <div style={{border: '5px solid var(--color-text)', padding: '30px', paddingBottom: '57px',  paddingTop: '95px', borderRadius: '20px'}}>
+          <Flex direction="column">
+            <div style={{marginBottom: '20px', textAlign: 'center'}}>
+              <Icon icon={<FaUserMd />} size="250px"/>
             </div>
               <Flex direction="column">
-                <Button label={t("login")} onClick={()=> setLoginModalData({visible:true, isSecretary: true})} />
+                <Button fontSize='1.5rem' colored={!isDarkMode} width='300px' label={t("login")} onClick={()=> setLoginModalData({visible:true, isSecretary: true})} />
               </Flex>
             </Flex>
-            </div>
-            
+          </div>
+         
+          <div style={{border: '5px solid var(--color-text)', padding: '30px', borderRadius: '20px'}}>
             <Flex direction="column">
-              <Icon icon={<FaHospitalUser />} size="200px"/>
+            <div style={{marginTop: '15px', }}>
+              <Icon icon={<FaHospitalUser />} size="300px"/>
+            </div>
               <Flex direction="column" gap='10px'>
-                <Button label={t("login")} onClick={()=> setLoginModalData({visible:true, isSecretary: false})} />
-                <Button label={t("register")} onClick={() => setRegisterModalData({visible:true, isSecretary:false})} />
+                <Button fontSize='1.5rem' colored={!isDarkMode} label={t("login")} onClick={()=> setLoginModalData({visible:true, isSecretary: false})} />
+                <Button fontSize='1.5rem' colored={!isDarkMode} label={t("register")} onClick={() => setRegisterModalData({visible:true, isSecretary:false})} />
               </Flex>
             </Flex>
+          </div>
           </Flex>
       <Modal visible={registerModalData.visible} centered>
         <Register isSecretary={registerModalData.isSecretary} closeModal={()=> setRegisterModalData({...registerModalData,visible: false})}/>
@@ -56,11 +59,8 @@ const PreLogin = () => {
       <Modal visible={loginModalData.visible} centered>
         <Login isSecretary={loginModalData.isSecretary} closeModal={()=> setLoginModalData({...loginModalData,visible: false})}/>
       </Modal>
-    </Page>
-     
+    </Page>  
     ) 
-
 }
-
 
 export default PreLogin
