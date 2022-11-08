@@ -1093,10 +1093,10 @@
   resolved "https://registry.npmjs.org/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@bpetii/uio-gui-library@0.1.76":
-  version "0.1.76"
-  resolved "https://npm.pkg.github.com/download/@bpetii/uio-gui-library/0.1.76/6208d6da4776c9ed65a7fb397ffbb96b35725126#6208d6da4776c9ed65a7fb397ffbb96b35725126"
-  integrity sha512-hMjtjSbzdgpP3T2pRdwlCO7U5TtT+Lc0EiSm4c2Pj62kLDcTAFu0CazXLEVxwALiS6kA3yw/G+jHI74wTlWyCw==
+"@bpetii/uio-gui-library@0.1.78":
+  version "0.1.78"
+  resolved "https://npm.pkg.github.com/download/@bpetii/uio-gui-library/0.1.78/1506c01b7a485202592967aebf593119b88a5821#1506c01b7a485202592967aebf593119b88a5821"
+  integrity sha512-zyFWBOrJ9wTlW0ioVTMYY/S8T/Qd/AWQXibbcjA2TISy0R4ooOZ3Gh+50h9vA3jBGAPgjFmagLWFiOt2Tq9JGg==
   dependencies:
     "@babel/runtime" "^7.19.0"
     "@fontsource/nunito-sans" "^4.5.9"

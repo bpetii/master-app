@@ -1,5 +1,5 @@
 import React, { useState }  from 'react';
-import {Flex, Icon, Button, Modal, Page} from '@bpetii/uio-gui-library';
+import {Flex, Icon, Button, Modal, Page, Tooltip} from '@bpetii/uio-gui-library';
 import { FaHospitalUser } from 'react-icons/fa';
 import {FaUserMd} from 'react-icons/fa';
 import { useTranslation } from 'react-i18next';
@@ -47,8 +47,15 @@ const PreLogin = () => {
               <Icon icon={<FaHospitalUser />} size="300px"/>
             </div>
               <Flex direction="column" gap='10px'>
-                <Button fontSize='1.5rem' colored={!isDarkMode} label={t("login")} onClick={()=> setLoginModalData({visible:true, isSecretary: false})} />
-                <Button fontSize='1.5rem' colored={!isDarkMode} label={t("register")} onClick={() => setRegisterModalData({visible:true, isSecretary:false})} />
+                <Tooltip text={['If you have already registered', 
+                  'press login and enter your email and password', 
+                  'otherwise press the resigter button below to create an account']} >
+                  <Button width='300px' fontSize='1.5rem' colored={!isDarkMode} label={t("login")} onClick={()=> setLoginModalData({visible:true, isSecretary: false})} />
+                </Tooltip>
+
+                <Tooltip text='' >
+                <Button width='300px' fontSize='1.5rem' colored={!isDarkMode} label={t("register")} onClick={() => setRegisterModalData({visible:true, isSecretary:false})} />
+                </Tooltip>
               </Flex>
             </Flex>
           </div>

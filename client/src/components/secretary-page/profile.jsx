@@ -89,7 +89,7 @@ const Profile = () => {
           <List bordered list={ filteredPatients} />        
         </div>
           <div>
-            <div>
+            <div style={{display: 'grid', justifyContent: 'space-between', gridTemplateColumns:'0.5fr 0.5fr', columnGap: '30px'}}>
               <Field label='Patient id'>
                 <Input value={selectedPatient?.id} disabled/>
               </Field>
@@ -98,7 +98,16 @@ const Profile = () => {
               </Field>
               <Field label='Patient Email' >
                 <Input value={selectedPatient?.email} onChange={e => setFilterInput(e.target.value)} disabled/>
-              </Field>      
+              </Field> 
+              <Field label='Address'>
+                <Input value={selectedPatient?.address} disabled/>
+              </Field>
+              <Field label='City'>
+                <Input value={selectedPatient?.city} onChange={e => setFilterInput(e.target.value)} disabled/>
+              </Field>
+              <Field label='Zip' >
+                <Input value={selectedPatient?.zip} onChange={e => setFilterInput(e.target.value)} disabled/>
+              </Field>        
             </div>
             <Divider>
               <Text>

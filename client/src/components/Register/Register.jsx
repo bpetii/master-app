@@ -42,7 +42,7 @@ const Register = ({
   const AccountForm={
     title: 'Account form',
     component: (<>
-      <Field label={'*' + t("email")} >
+      <Field label={t("email") + '*'} >
         <Input 
           name='email'
           placeholder={t("enterYourEmail")}
@@ -53,7 +53,7 @@ const Register = ({
           value={email}
         />
         </Field>
-        <Field label={'*' + t("password")}>
+        <Field label={t("password") + '*'}>
           <Input 
             name='password'
             type='password'
@@ -107,7 +107,7 @@ const Register = ({
   const UserForm ={
     title: 'User form',
     component: ( <>
-      <Field label='*First name'>
+      <Field label='First name*'>
        <Input
          name='firstName'
          placeholder='Enter your first name'
@@ -117,7 +117,7 @@ const Register = ({
          value={firstName}
        />
      </Field>
-     <Field label='*Last name'>
+     <Field label='Last name*'>
        <Input
          name='lastName'
          placeholder='Enter your last name'
