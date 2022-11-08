@@ -1,10 +1,14 @@
 CREATE TABLE IF NOT EXISTS users (
   id UUID NOT NULL DEFAULT uuid_generate_v1(),
-  doctorid UUID DEFAULT NULL,
-  email character varying(30),
-  name character varying(30),
+  firstname  character varying(100) NOT NULL,
+  lastname character varying(100) NOT NULL,
+  city character varying(100) DEFAULT NULL,
+  zip character varying(10) DEFAULT NULL,
+  address character varying(255) DEFAULT NULL,
+  email character varying(100) NOT NULL,
   passhash character varying(255) NOT NULL,
   issecretary boolean NOT NULL,
+  doctorid UUID DEFAULT NULL,
   CONSTRAINT users_id_pk PRIMARY KEY (id),
   CONSTRAINT fk_doctor 
 	FOREIGN KEY(doctorid)

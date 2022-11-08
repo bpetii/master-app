@@ -7,10 +7,9 @@ const bcrypt = require('bcrypt');
 
 router.post('/', async (req, res) => {
     const {email, password, isSecretary} = req.body;
-    console.log(req.body);
   
     const user = await pool.query(
-      "SELECT id, name, doctorid, passhash, email, issecretary FROM users u WHERE u.email=$1 AND u.issecretary=$2",
+      "SELECT id, CONCAT(firstname , ' ', lastname) as name, city, zip, address, doctorid, passhash, email, issecretary FROM users u WHERE u.email=$1 AND u.issecretary=$2",
       [email, isSecretary])
   
       if (!user.rowCount) return res.status(400).json({ status: "Invalid email or password"});
