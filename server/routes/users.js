@@ -73,7 +73,7 @@ router.get('/financial', async (req, res) => {
       JOIN appointments as app on app.doctorid = d.id
       JOIN users as u on u.id= app.userid
       WHERE d.id=$1 AND app.datetime::TIMESTAMP::DATE = $2::TIMESTAMP::DATE`, [doctorid, datetime]);
-    
+    console.log(patients.rows)
     res.json(patients.rows);
   }
 });
