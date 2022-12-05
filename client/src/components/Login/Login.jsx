@@ -49,20 +49,27 @@ const Login = ({
       }} />
     </div>);
 
+  const emailInfoForPatient=['If you have already registered', 
+  'press login and enter your email and password,', 
+  'otherwise press the resigter button below to create an account.']
+
+  const emailInfoForSecretary=['If you have already registered', 
+  'press login and enter your email and password,', 
+  'otherwise contact the administrator to create an account.']
   const loginContent = (
   <>
    {errorMessage}
-     <Field label={'*' + t("email")} info={showInfo && 'Your email address'}>
+     <Field label={t("email") + '*'} info={showInfo? isSecretary ? emailInfoForSecretary : emailInfoForPatient : ''}>
       <Input
         name='email'
-        placeholder={t("enterYourEmail")}
+        placeholder={t("enterYourEmail") + '. E.g: test@test.com'}
         onChange={(evt) => {
           setEmail(evt.target.value);
         } }
         error={!email ? "error" : null}
         value={email} />
     </Field>
-    <Field label={'*' + t("password")} info={showInfo && 'Your password'}>
+    <Field label={t("password") + '*'}>
         <Input
           name='password'
           type='password'

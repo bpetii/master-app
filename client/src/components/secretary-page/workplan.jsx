@@ -3,6 +3,8 @@ import { useSelector } from 'react-redux';
 import { Field, Input, Page, Card, TextArea, Button} from '@bpetii/uio-gui-library';
 import { DayPicker } from 'react-day-picker';
 import { format  } from 'date-fns';
+import { toast } from 'react-toastify';
+import TimePicker from 'react-time-picker';
 import { CustomDayPicker } from '../day-picker/day-picker';
 
 
@@ -16,8 +18,8 @@ const getWorkPlan = (userid, access_token, datetime) => {
 }
 
 const Workplan = () => {
+  const {showInfo} = useSelector(state => state.ui);
   const {user, access_token} = useSelector(state => state.user);
-  const [workplan, setWorkplan] = useState([]);
   const [datetime, setDatetime] = useState(new Date());
   const [from, setFrom] = useState("")
   const [to, setTo] = useState("");
@@ -25,19 +27,32 @@ const Workplan = () => {
   const [comments, setComments] = useState("");
   const [isSaved, setIsSaved] = useState(false);
 
+  const resetData = () => {
+    setFrom("")
+    setTo("")
+    setNumber('')
+    setComments('')
+  }
   const handleDaySelected = (date) => {
     //TODO manipulate the date 
     setDatetime(date)
   }
-  console.log(workplan)
   useEffect(() => {
     async function fetchData() {
       const plans = await getWorkPlan(user.id,access_token, datetime);
-      setWorkplan(plans);
+      if (plans) {
+        setFrom(plans.from)
+        setTo(plans.to)
+        setNumber(plans.number)
+        setComments(plans.comments)
+        setIsSaved(true)
+      } else {
+        resetData();
+        setIsSaved(false)
+      }
     }
-
     fetchData();
-  }, []);
+  }, [datetime]);
 
   const onSave = () => {
     return fetch("http://localhost:4000/api/workplan",{
@@ -56,6 +71,7 @@ const Workplan = () => {
       })
     }).then(() => {
       setIsSaved(true);
+        toast.success('Successfully saved!')
     })
   }
 
@@ -66,25 +82,18 @@ const Workplan = () => {
             mode="single"
             value={datetime}
             onSelect={handleDaySelected}
+            info={showInfo && ['Use the calendar to choose the day or month and see the workplan for that specifc day']}
         />
-        <Card heading={<h3>{format(datetime, 'PP')}</h3>}>
+        <Card heading={<h3>{format(datetime, 'PP')}</h3>} info={showInfo && ['Fill out the required information and press Save button to store the workplan', 'If you need to edit the workplan press Edit button, change the information and press Save to apply changes']}>
           <Field label="From">
-              <Input
-              name='from'
-              type='text'
-              onChange={(evt) => {
-                setFrom(evt.target.value);
-              }}
-              value={from} />
+          <input type='time' 
+            onChange={(evt) => setFrom(evt.target.value)} 
+            value={from} />
           </Field>
           <Field label="To">
-              <Input
-              name='to'
-              type='text'
-              onChange={(evt) => {
-                setTo(evt.target.value);
-              } }
-              value={to} />
+          <input type='time' 
+            onChange={(evt) => setTo(evt.target.value)} 
+            value={to} />
           </Field>
           <Field label="Number">
               <Input

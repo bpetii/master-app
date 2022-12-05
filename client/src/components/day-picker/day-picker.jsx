@@ -7,7 +7,7 @@ import {faIR, enUS} from 'date-fns/locale';
 import i18next from 'i18next';
 
 
-export const CustomDayPicker =({value, onSelect, mode='single'}) => {
+export const CustomDayPicker =({value, onSelect, info, mode='single'}) => {
     const {language} = i18next;
     const singleFooter = (mode === 'single' && value? <p>You picked {format(value, 'PP')}.</p> : <p>Please pick a day.</p>);
     const rangeFotter = ( 
@@ -41,7 +41,7 @@ export const CustomDayPicker =({value, onSelect, mode='single'}) => {
        
     }
     return(
-      <Card border heading={<h3> Calendar</h3>}>
+      <Card border heading={<h3> Calendar</h3>} info={info}>
          <DayPicker
           mode={mode}
           selected={value}

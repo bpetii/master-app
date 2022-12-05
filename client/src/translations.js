@@ -14,6 +14,9 @@ export const translationsEn = {
    name: "Name",
    enterYourName: "Enter your email",
    createAccount: "Create account",
+   addressForm: 'Address form',
+   accountForm: 'Account form',
+   userForm: 'User form',
 
    //patient page:
    city: "City", 
@@ -65,6 +68,9 @@ export const translationsEn = {
    name: "نام و نام خانوادگی",
    enterYourName: "نام و نام خانوادگی خود را وارد کنید",
    createAccount: "ایجاد حساب کاربری",
+   addressForm: '',
+   accountForm: '',
+   userForm: '',
  
    //patient page:
    city: "شهر",

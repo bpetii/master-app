@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {Drawer, List, Flex, Message, Loader, Spinner, Page} from '@bpetii/uio-gui-library';
+import {Drawer, List, Flex, Message, Loader, Spinner, Page, Label} from '@bpetii/uio-gui-library';
 import Schedule from './schedule/schedule';
 import './patient-page.css'
 import { DataFilter } from './data-filter/data-filter';
@@ -62,7 +62,7 @@ const filteredDoctors = doctorsFiltered(doctors, filters);
             right={false}
             border={true}
       >
-        <div >
+        <div>
           <DataFilter 
             doctors={doctors} 
             filters={filters} 

@@ -27,26 +27,16 @@ const Schedule = ({userid, doctorid}) => {
     dispatch(createAppointments(payload))
   }
 
-  const formatAppoinmentDate = (isoDate) => {
-    const date = new Date(isoDate);
-    const year = date.getFullYear();
-    let month = date.getMonth()+1;
-    let dt = date.getDate();
-
-    if (dt < 10) {
-      dt = '0' + dt;
-    }
-    if (month < 10) {
-      month = '0' + month;
-    }
-
-    console.log(year+'-' + month + '-'+dt, date.getHours(), date.getMinutes());
-  }
-
   function timeSlotValidator(slotTime) {
     const {from, to, appointments} = selectedDoctor;
-    
-    formatAppoinmentDate(appointments[0]);
+    const appointmentsWithOffset = appointments.map(appoinement => {
+      const appoinementWithOffset = new Date(appoinement);
+      const userTimezoneOffset = appoinementWithOffset.getTimezoneOffset() * 60000 * -1;
+      const normalizedDate= new Date(appoinementWithOffset - userTimezoneOffset);
+      return normalizedDate.toISOString();
+    })
+
+    if (appointmentsWithOffset.includes(slotTime.toISOString())) return false;
     const [fromHour, fromMinute] = from.split(':');
     const [toHour, toMinute] = to.split(':');
 

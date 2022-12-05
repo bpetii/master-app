@@ -1,7 +1,8 @@
 import React from 'react';
 import { Outlet, useNavigate, matchPath } from "react-router-dom";
 import { SideBar} from '@bpetii/uio-gui-library';
-import { FaCalendar, FaAddressCard, FaMoneyCheckAlt } from 'react-icons/fa';
+import { FaCalendar, FaAddressCard } from 'react-icons/fa';
+import {GiMoneyStack} from 'react-icons/gi'
 import {MdWork} from 'react-icons/md'
 
 
@@ -44,7 +45,7 @@ const SecretaryViews = () => {
               label:'Financial Report',
               value:'/secretary/financial-report',
               onClick: () => {navigate('/secretary/financial-report')},
-              icon: <FaMoneyCheckAlt />,
+              icon: <GiMoneyStack />,
               isActive: matches(currentUrl, '/secretary/financial-report', true)
       
             },

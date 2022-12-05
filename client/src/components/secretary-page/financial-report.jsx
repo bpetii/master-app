@@ -1,6 +1,6 @@
 import React, {useState,useEffect} from 'react';
 import { useSelector } from 'react-redux';
-import { Page,List, Field, Input, Toggle } from '@bpetii/uio-gui-library';
+import { Page,List, Field, Input, Toggle, Label, Spacer } from '@bpetii/uio-gui-library';
 import {  addDays } from 'date-fns';
 import { CustomDayPicker } from '../day-picker/day-picker';
 
@@ -24,6 +24,7 @@ const getPatients= (doctorid, access_token, isMultiple, dateValue) => {
 };
 
 const FinancialReport = () => {
+  const {showInfo} = useSelector(state => state.ui);
   const todayDate = new Date();
   const { access_token, doctorid} = useSelector(state => state.user.user);
   const [patients, setPatiens] = useState({items: []});
@@ -55,6 +56,8 @@ const FinancialReport = () => {
     <Page left='70px' padding='0'>
         <div style={{display: 'grid', gridTemplateColumns: '500px 500px', gap: '2rem', margin: 'auto 100px', justifyContent: 'center'}}>
           <div>
+          <Label label='Financial Report' info={showInfo && ['Use the calendar to select a specific date if you need the information between two dates toggle the Use range and use mouse drag to select your range', 'The information is displayed on the right column']}/>
+          <Spacer />
             <Toggle label="Use range" onChange={() => setMultiple(prev=> !prev)} checked={isMultiple}/>
             <CustomDayPicker
               mode={isMultiple ? 'range' : 'single'}

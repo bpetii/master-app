@@ -45,7 +45,7 @@ const Register = ({
       <Field label={t("email") + '*'} >
         <Input 
           name='email'
-          placeholder={t("enterYourEmail")}
+          placeholder={t("enterYourEmail") + '. E.g: test@test.com'}
           onChange={(evt) => {
             setEmail(evt.target.value)
           }}
@@ -84,7 +84,7 @@ const Register = ({
      <Field label='Zip'>
        <Input
          name='zip'
-         placeholder='Enter your zip'
+         placeholder={`Enter your zip (10 digits without '-' sign )`}
          onChange={(evt)=>{
           setZip(evt.target.value)
          }}

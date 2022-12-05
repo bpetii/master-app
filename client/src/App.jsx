@@ -7,6 +7,8 @@ import MainNavigation from './components/main-navigation/main-navigation';
 import {initReactI18next} from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import {translationsEn, translationsFa, translationsHu} from './translations';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const languageList = [
   {
@@ -52,6 +54,7 @@ i18n
 const App = () => {
   return (
     <>
+      <ToastContainer />
       <MainNavigation />
 
         <Views />

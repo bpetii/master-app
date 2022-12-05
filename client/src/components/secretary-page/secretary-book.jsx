@@ -12,6 +12,7 @@ import { CustomDayPicker } from '../day-picker/day-picker';
 const SecretaryPage = () => {
   const [patients, setPatiens] = useState([]);
   const [date, setDate] = useState(new Date());
+  const {showInfo} = useSelector(state => state.ui);
  const { access_token} = useSelector(state => state.user.user);
   const handleDaySelected = (date) => {
     //TODO manipulate the date 
@@ -45,6 +46,7 @@ const SecretaryPage = () => {
         mode="single"
         value={date}
         onSelect={handleDaySelected}
+        info={showInfo && ['Use the calendar to see available appointments and book a new appointment', 'The appointments that have already been booked can be accessed in the right column']}
     />
       </div>
           <Drawer

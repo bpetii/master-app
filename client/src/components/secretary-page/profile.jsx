@@ -1,6 +1,8 @@
 import React, {useState, useEffect} from 'react';
-import { List, Page, Field, Input, Text, Table, Divider } from '@bpetii/uio-gui-library';
+import { List, Page, Field, Input, Text, Table, Divider, Button, Label, Spacer, Icon} from '@bpetii/uio-gui-library';
+import {MdDeleteForever} from 'react-icons/md';
 import { useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 import { format } from 'date-fns';
 
 const headers=[{
@@ -35,10 +37,21 @@ const getHistory = (userid, access_token) => {
 
 const Profile = () => {
   const {access_token} = useSelector(state => state.user.user);
+  const {showInfo} = useSelector(state => state.ui);
   const [patients, setPatiens] = useState([]);
   const [history, setHistory] = useState([]);
-  const [filterInput, setFilterInput] = useState('');
+  const [filterName, setFilterName] = useState('');
+  const [isEditing, setIsEditing] = useState(false);
+  const [filterId, setFilterId] = useState('');
   const [selectedPatient, setSelectedPatient] = useState(null);
+  const [zipValue, setZipValue] = useState('');
+
+  const handleEdit= () => {
+    setIsEditing(prev=> !prev);
+    if (isEditing) {
+      toast.success('Successfully saved!')
+    }
+  }
 
   useEffect(() =>  {
     async function fetchData() {
@@ -55,13 +68,16 @@ const Profile = () => {
       setHistory(history);
     }
     fetchData();
+    setZipValue(selectedPatient?.zip)
   }, [selectedPatient])
 
   const patientsFiltered = () => {
     let newList = [...patients];
    /*  Object.keys(filters).map(filterKey => newList = newList.filter(item => item[filterKey] === filters[filterKey].value)) */
     return {
-      items: newList.filter(p => p.name.toLowerCase().includes(filterInput.toLowerCase())).map((patient) => ({
+      items: newList.filter(p => p.name.toLowerCase().includes(filterName.toLowerCase()))
+      .filter(p => p.id.toLowerCase().includes(filterId.toLocaleLowerCase()))
+      .map((patient) => ({
         id: patient.id,
         name: patient.name,
         onClick: () => setSelectedPatient(patient),
@@ -83,37 +99,43 @@ const Profile = () => {
     <Page left='70px' padding='20px'>
       <div style={{display: 'grid', gridTemplateColumns: '300px 1fr', gap: '2rem'}}>
         <div >
-          <Field label='name' labelWidth='50px'>
-            <Input value={filterInput} onChange={e => setFilterInput(e.target.value)}/> 
+        <Label label='Patient profile' info={showInfo && ['To view patients profile use the filters (Name, Personal Identity Number) to find the patient you are looking for']}/>
+        <Spacer />
+          <Field label='Patient name' labelWidth='100px' labelLeft>
+            <Input value={filterName} onChange={e => setFilterName(e.target.value)}/> 
+          </Field> 
+          <Field label='Patient ID' labelWidth='100px' labelLeft>
+          <Input value={filterId} onChange={e => setFilterId(e.target.value)}/> 
           </Field>  
           <List bordered list={ filteredPatients} />        
         </div>
           <div>
+          <Label label='View and edit patient information' info={showInfo && ['Patients information can be viewed in the textbox.', 'To edit the information press the Edit button to enable editing', 'then press Save button to apply the changes']}/>
+          <Spacer />
             <div style={{display: 'grid', justifyContent: 'space-between', gridTemplateColumns:'0.5fr 0.5fr', columnGap: '30px'}}>
               <Field label='Patient id'>
-                <Input value={selectedPatient?.id} disabled/>
+                <Input value={selectedPatient?.id} disabled={!isEditing}/>
               </Field>
               <Field label='Patient Name'>
-                <Input value={selectedPatient?.name} onChange={e => setFilterInput(e.target.value)} disabled/>
+                <Input value={selectedPatient?.name} disabled={!isEditing}/>
               </Field>
               <Field label='Patient Email' >
-                <Input value={selectedPatient?.email} onChange={e => setFilterInput(e.target.value)} disabled/>
+                <Input value={selectedPatient?.email} disabled={!isEditing}/>
               </Field> 
               <Field label='Address'>
-                <Input value={selectedPatient?.address} disabled/>
+                <Input value={selectedPatient?.address} disabled={!isEditing}/>
               </Field>
               <Field label='City'>
-                <Input value={selectedPatient?.city} onChange={e => setFilterInput(e.target.value)} disabled/>
+                <Input value={selectedPatient?.city} disabled={!isEditing}/>
               </Field>
               <Field label='Zip' >
-                <Input value={selectedPatient?.zip} onChange={e => setFilterInput(e.target.value)} disabled/>
-              </Field>        
+                <Input value={zipValue} disabled={!isEditing}  onChange={e => setZipValue(e.target.value)}/>
+              </Field>   
             </div>
-            <Divider>
-              <Text>
-               Appointments
-              </Text>
-            </Divider>
+            <Button label={isEditing? 'Save' : 'Edit'} fontSize='1.1rem' width='100px' onClick={handleEdit}/> 
+            <Divider />
+            <Label label='Appointments history' info={showInfo && ['The table below shows the appointments history of the selected patient. You cannot edit it.']}/>
+            <Spacer />
             <Table table={{headers, rows}} />
         </div>
       </div>
