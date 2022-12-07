@@ -8,6 +8,7 @@ import SecretaryBook from './secretary-page/secretary-book';
 import SecretaryProfile from './secretary-page/profile';
 import Workplan from './secretary-page/workplan';
 import FinancialReport from './secretary-page/financial-report';
+import Invoice from './secretary-page/invoice';
 
 const Views = () => {
     return(
@@ -21,6 +22,7 @@ const Views = () => {
                     <Route exact path="/secretary/profile" element={<SecretaryProfile/>} />
                     <Route exact path="/secretary/workplan" element={<Workplan/>} />
                     <Route exact path="/secretary/financial-report" element={<FinancialReport/>} />
+                    <Route exact path="/secretary/invoice" element={<Invoice/>} />
                 </Route>
             </Route>
             <Route path='*' element={<PreLogin />} />
