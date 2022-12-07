@@ -6,6 +6,7 @@ import { createAppointments } from '../../../store/slices/appointmentsSlice';
 import {useTranslation} from 'react-i18next';
 import {Card} from '@bpetii/uio-gui-library';
 import { darkTheme } from './dark-theme';
+import { loadDoctors } from '../../../store/slices/doctorsSlice';
 
 const SLOT_MINUTES = 15;
 
@@ -14,25 +15,28 @@ const Schedule = ({userid, doctorid}) => {
   const {loading, error, done} = useSelector(state => state.appointments)
   const {doctors} = useSelector(state => state.doctors)
   const {isDarkMode} = useSelector(state => state.user);
+  const {showInfo} = useSelector(state => state.ui);
 
   const selectedDoctor = doctors.find(doctor => doctorid === doctor.id)
   const dispatch = useDispatch();
 
   const handleScheduled = (datetime) => {
+    const userTimezoneOffset = datetime.getTimezoneOffset() * 60000;
+    const normalizedDate= new Date(datetime.getTime() - userTimezoneOffset);
     const payload = {
-      datetime,
+      datetime: normalizedDate,
       userid,
       doctorid
     }
     dispatch(createAppointments(payload))
+    dispatch(loadDoctors())
   }
 
   function timeSlotValidator(slotTime) {
     const {from, to, appointments} = selectedDoctor;
     const appointmentsWithOffset = appointments.map(appoinement => {
       const appoinementWithOffset = new Date(appoinement);
-      const userTimezoneOffset = appoinementWithOffset.getTimezoneOffset() * 60000 * -1;
-      const normalizedDate= new Date(appoinementWithOffset - userTimezoneOffset);
+      const normalizedDate= new Date(appoinementWithOffset);
       return normalizedDate.toISOString();
     })
 
@@ -49,6 +53,8 @@ const Schedule = ({userid, doctorid}) => {
     }
     return false;
   }
+  console.log(!error);
+  console.log(done);
 
   const ThemeWrapper = () => {
     if(isDarkMode) {
@@ -87,7 +93,7 @@ const Schedule = ({userid, doctorid}) => {
   }
 
   return (
-    <Card margin='0' padding='false' info={
+    <Card margin='0' padding='false' info={showInfo && 
         <ol>
           <li>Select the doctor you would like to visit from the list of doctors on the left</li>
           <li>Select the date you prefer from the available dates on the calendar</li>
@@ -96,7 +102,7 @@ const Schedule = ({userid, doctorid}) => {
           <li>Press "Schedule" button to finalize your appointment</li>
         </ol>
       }
-      heading={<h3>Schedule</h3>}
+      heading={<h3>{t("calendar")}</h3>}
       > {ThemeWrapper()}
     </Card>
    

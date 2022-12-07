@@ -1,8 +1,9 @@
 import React, {useState,useEffect} from 'react';
 import { useSelector } from 'react-redux';
-import { Page,List, Field, Input, Toggle, Label, Spacer } from '@bpetii/uio-gui-library';
+import { Page,List, Field, Input, Toggle, Label, Spacer, Button } from '@bpetii/uio-gui-library';
 import {  addDays } from 'date-fns';
 import { CustomDayPicker } from '../day-picker/day-picker';
+import {HiPrinter} from 'react-icons/hi'
 
 const getPatients= (doctorid, access_token, isMultiple, dateValue) => {
   let from =null;
@@ -27,6 +28,7 @@ const FinancialReport = () => {
   const {showInfo} = useSelector(state => state.ui);
   const todayDate = new Date();
   const { access_token, doctorid} = useSelector(state => state.user.user);
+  console.log(doctorid);
   const [patients, setPatiens] = useState({items: []});
   const [datetime, setDatetime] = useState(todayDate);
   const [isMultiple, setMultiple] = useState(false);
@@ -48,6 +50,7 @@ const FinancialReport = () => {
     fetchData();
   }, [datetime, range, isMultiple]);
 
+  console.log(patients);
   const sum = patients.items.reduce((prev, cur) => {
     return prev+ +cur.metadata;
   },0)
@@ -65,11 +68,12 @@ const FinancialReport = () => {
               onSelect={isMultiple ? setRange : setDatetime}
            />
           </div> 
-        <div style={{display: 'flex', gap: '30px', flexDirection: 'column', justifyContent: 'space-between', marginBottom: '-14px', marginTop: '40px'}}>
+        <div style={{display: 'flex', gap: '30px', flexDirection: 'column',  marginBottom: '-14px', marginTop: '40px'}}>
+          <div id='div-id-name'>
           <List 
             list={patients}
           />
-          <Field label="Total: ">
+             <Field label="Total: ">
             <Input
               name='from'
               type='text'
@@ -77,7 +81,13 @@ const FinancialReport = () => {
               disabled
             />
           </Field>
+          </div>
+       
+          <Field label='Print:' labelLeft>
+            <Button onClick={() => printLayer('div-id-name')} fontSize='2em'  width='100px' label={<HiPrinter />}/>
+        </Field>     
         </div>
+ 
       </div>
     </Page>
   )

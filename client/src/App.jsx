@@ -2,6 +2,7 @@
 import React from 'react';
 import Views from './components/Views';
 import {Footer} from '@bpetii/uio-gui-library';
+import {useSelector} from 'react-redux';
 import i18n from 'i18next';
 import MainNavigation from './components/main-navigation/main-navigation';
 import {initReactI18next} from 'react-i18next';
@@ -52,9 +53,10 @@ i18n
 })
 
 const App = () => {
+  const {isDarkMode} = useSelector(state => state.user);
   return (
     <>
-      <ToastContainer />
+      <ToastContainer theme={isDarkMode? "dark" : "light"}/>
       <MainNavigation />
 
         <Views />

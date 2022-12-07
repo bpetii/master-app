@@ -24,7 +24,7 @@ const userSlice = createSlice({
         },
         toggleDarkMode: (user) => {
           user.isDarkMode = !user.isDarkMode;
-        }
+        },
     }
 })
 
@@ -77,6 +77,30 @@ export const authLogin = (email, password, isSecretary) => async dispatch => {
     } catch (err) {
         return Promise.reject(err);
     }
+
+}
+
+export const deleteUser =(userId) => async () => {
+  try {
+
+      const response = await fetch(API_URL + `users/${userId}`, {
+          method: "DELETE",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+    
+        const isDeleted = await response.json();
+        if (isDeleted) {
+          return Promise.resolve(true);
+        } else {
+          return Promise.reject(false);
+        }
+  } catch (err) {
+      return Promise.reject(err);
+  }
+
 }
 
 export default userSlice.reducer;

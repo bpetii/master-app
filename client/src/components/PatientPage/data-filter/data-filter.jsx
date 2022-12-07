@@ -21,7 +21,7 @@ export const DataFilter = ({
     return (
         <div className='listFilter'>
           <Spacer />
-          <Label label='Filter options:' info={showInfo && ['Use the filters (City, Expertise, Name) to find the doctor you would like to meet.', 
+          <Label label={t("filterOptions")} info={showInfo && ['Use the filters (City, Expertise, Name) to find the doctor you would like to meet.', 
             'Then click on the name of the doctor to see the calendar and the available appointments']} />
           <Spacer />
           {FILTER_KEYS.map(key => (
@@ -42,7 +42,7 @@ export const DataFilter = ({
                   }
                   }}
                 options={getUniqueOptions(key)}
-                width= '200px'
+                width= '300px'
               /> 
             </Field>
           ))}

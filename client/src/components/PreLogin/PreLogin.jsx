@@ -23,7 +23,7 @@ const PreLogin = () => {
 
    return (
     <Page left='0'>
-      <h1 style={{textAlign: 'center', fontSize:'3rem', color: 'var(--color-text)'}}>Secretary Management Application</h1>
+      <h1 style={{textAlign: 'center', fontSize:'3rem', color: 'var(--color-text)'}}>{t("secretaryManagementApp")}</h1>
       <Flex 
           gap="300px" 
           alignItems="center"

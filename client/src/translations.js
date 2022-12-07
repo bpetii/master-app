@@ -2,6 +2,7 @@ export const translationsEn = {
     //pre-login:
    login: "Login",
    register: "Register",
+   secretaryManagementApp: "Secretary Management Application",
  
    //login:
    email: "Email address",
@@ -24,6 +25,8 @@ export const translationsEn = {
    schedule: "Schedule", 
    doneText: "You scheduled an appointment with {{name}}",
    loading: "Loading", 
+   filterOptions: "Filter options",
+   calendar: "Calendar"
 
  }
  
@@ -31,6 +34,7 @@ export const translationsEn = {
      //pre-login:
      login: "Bejelentkezés",
      register: "Regisztráció",
+     secretaryManagementApp: 'Titkárkezelési alkalmazás',
    
      //login:
      email: "Email cím",
@@ -50,6 +54,8 @@ export const translationsEn = {
      schedule: "Foglal", 
      doneText: "Sikeres időpont foglalás {{name}} doktorral",
      loading: "Töltés", 
+     filterOptions: "Szűrési opciók",
+     calendar: "Naptár"
  }
  
  export const translationsFa = {
@@ -76,7 +82,10 @@ export const translationsEn = {
    city: "شهر",
    expertise: "تخصص",
    schedule: "تایید",
+   calendar: "تقویم",
    doneText: "شما یک وقت ویزیت  با",
-   loading: "در حال بارگذاری"
+   loading: "در حال بارگذاری",
+   filterOptions: "انتخاب ها",
+   secretaryManagementApp: 'نرم افزار مدیریت مطب'
  }
  

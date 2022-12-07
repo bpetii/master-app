@@ -13,6 +13,18 @@
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
+    <script type="text/javascript">
+      function printLayer(layer) {
+        console.log('here')
+        const generator = window.open(",name,")
+        const layerText = document.getElementById(layer)
+        generator.document.write(layerText.innerHTML.replace('Print me'))
+        generator.document.close();
+        generator.print()
+        generator.close()
+      }
+    </script>
     <script type="module" src="/src/index.jsx"></script>
+   
   </body>
 </html>

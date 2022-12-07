@@ -5,7 +5,7 @@ import Schedule from './schedule/schedule';
 import './patient-page.css'
 import { DataFilter } from './data-filter/data-filter';
 import { useState } from 'react';
-import { loadAppointments } from '../../store/slices/appointmentsSlice';
+import { loadAppointments, appointmentRestart } from '../../store/slices/appointmentsSlice';
 
 const PatientPage = () => {
   const {doctors, loading, error} = useSelector(state => state.doctors);
@@ -17,6 +17,11 @@ const PatientPage = () => {
   useEffect(() => {
     dispatch(loadAppointments(userid))
   }, [userid])
+
+  useEffect(() => {
+    dispatch(appointmentRestart())
+  }, [doctorId])
+
 
   const doctorsFiltered = (doctors, filters) => {
     let newList = [...doctors];
@@ -56,8 +61,8 @@ const filteredDoctors = doctorsFiltered(doctors, filters);
           </div>
           <Drawer
             open
-            width={350}
-            closedWidth={50}
+            width={500}
+            closedWidth={0}
             button={true}
             right={false}
             border={true}

@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { List, Flex, Page, Drawer } from '@bpetii/uio-gui-library';
+import { List, Button, Page, Drawer } from '@bpetii/uio-gui-library';
 import Schedule from '../PatientPage/schedule/schedule';
 import { useSelector } from 'react-redux';
 import { DayPicker } from 'react-day-picker';
@@ -36,7 +36,7 @@ const SecretaryPage = () => {
 
   return (
     <Page left='70px' padding='0'>
-      <Flex height='100%'>
+       <div style={{display: 'grid', gridTemplateColumns: '500px 1fr', gap: '2rem', margin: 'auto 100px', justifyContent: 'center'}}>
       <div
             style={{
               flexGrow: 1,
@@ -47,11 +47,15 @@ const SecretaryPage = () => {
         value={date}
         onSelect={handleDaySelected}
         info={showInfo && ['Use the calendar to see available appointments and book a new appointment', 'The appointments that have already been booked can be accessed in the right column']}
+        
     />
+    <div style={{marginTop:'10px', textAlign: 'center'}}>
+    <Button label="Book appointment" fontSize='1.1rem' width='250px' onClick={()=> {}}/> 
+    </div>  
       </div>
           <Drawer
             open
-            width={350}
+            width={500}
             closedWidth={50}
             right={true}
             border={true}
@@ -60,7 +64,7 @@ const SecretaryPage = () => {
                   list={{items: patients}}
               />
         </Drawer>
-     </Flex>
+     </div>
     </Page>
   )
 }

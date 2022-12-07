@@ -113,7 +113,7 @@ const Workplan = () => {
               } }
               value={comments} />
           </Field>
-          <Button label="Save" onClick={onSave} disabled={isSaved}/>
+          <Button label="Save" onClick={onSave} disabled={isSaved} width='100px' fontSize='1.1rem'/>
         </Card>
       </div>
     </Page>
