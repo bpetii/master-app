@@ -15,7 +15,6 @@ router.get("/", authorization, async (req, res) => {
 })
 
 router.post("/", authorization, async (req, res) => {
-  console.log(req.body);
   const {datetime, userid, doctorid} = req.body;
   try {
     const appointments = await pool.query(

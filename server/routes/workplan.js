@@ -3,7 +3,6 @@ const pool = require('../db');
 const authorization = require('../middleware/authorization')
 
 router.post("/", authorization, async (req, res) => {
-    console.log('here');
   const {secretaryid, from, to, number, comments, datetime} = req.body;
   try {
     const appointments = await pool.query(
@@ -22,7 +21,6 @@ router.get("/", authorization, async (req, res) => {
       const appointments = await pool.query(
         `SELECT "from", "to", number, comments, datetime::TIMESTAMP FROM workplan
         WHERE secretaryid=$1 AND datetime::TIMESTAMP::DATE=$2::TIMESTAMP::DATE`, [secretaryid, datetime])
-          console.log(appointments.rows[0]);
       res.json(appointments.rows[0] || null);
     } catch (err){
       console.error(err.message);

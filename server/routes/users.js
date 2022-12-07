@@ -6,7 +6,6 @@ const bcrypt = require('bcrypt');
 
 router.post('/', async (req, res) => {
     const {firstName, lastName, city, zip, address, email, password, isSecretary, doctorid} = req.body;
-    console.log(req.body);
     const existingUser = await pool.query(
         "SELECT id from users WHERE email=$1",
         [email]
@@ -38,10 +37,19 @@ router.get('/', async (req, res) => {
   res.json(user.rows);
 });
 
+router.delete('/:userId', async (req, res) => {
+  try {
+     await pool.query( `DELETE FROM users WHERE id=$1 `, [req.params.userId]);
+      res.json(true);
+  } catch {
+    res.status(500).json(false)
+  }
+  
+});
+
 router.get('/patients', async (req, res) => {
   const patients = await pool.query(
   "SELECT id, CONCAT(firstname , ' ', lastname) as name, email, address, zip, city FROM users WHERE issecretary=false");
-  console.log(patients.rows)
   res.json(patients.rows);
 });
 
@@ -56,7 +64,6 @@ router.get('/history', async (req, res) => {
 });
 
 router.get('/financial', async (req, res) => {
-  console.log(req.query);
   const {doctorid, isMultiple, datetime, from, to} = req.query;
   if (isMultiple==="true") {
     const patients = await pool.query(
@@ -73,7 +80,6 @@ router.get('/financial', async (req, res) => {
       JOIN appointments as app on app.doctorid = d.id
       JOIN users as u on u.id= app.userid
       WHERE d.id=$1 AND app.datetime::TIMESTAMP::DATE = $2::TIMESTAMP::DATE`, [doctorid, datetime]);
-    console.log(patients.rows)
     res.json(patients.rows);
   }
 });
