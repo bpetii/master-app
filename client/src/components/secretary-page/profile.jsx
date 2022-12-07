@@ -1,8 +1,9 @@
 import React, {useState, useEffect} from 'react';
-import { List, Page, Field, Input, Text, Table, Divider, Button, Label, Spacer, Icon} from '@bpetii/uio-gui-library';
+import { List, Page, Field, Input, Flex, Table, Divider, Button, Label, Spacer, Tooltip, Modal, Dialog} from '@bpetii/uio-gui-library';
 import {MdDeleteForever} from 'react-icons/md';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
+import { deleteUser } from '../../store/slices/userSlice';
 import { format } from 'date-fns';
 
 const headers=[{
@@ -37,9 +38,11 @@ const getHistory = (userid, access_token) => {
 
 const Profile = () => {
   const {access_token} = useSelector(state => state.user.user);
+  const dispatch = useDispatch();
   const {showInfo} = useSelector(state => state.ui);
   const [patients, setPatiens] = useState([]);
   const [history, setHistory] = useState([]);
+  const [showDeleteModal, setShowDeleteModal] = useState(false)
   const [filterName, setFilterName] = useState('');
   const [isEditing, setIsEditing] = useState(false);
   const [filterId, setFilterId] = useState('');
@@ -52,6 +55,28 @@ const Profile = () => {
       toast.success('Successfully saved!')
     }
   }
+
+  const removePatient = () => {
+    if (selectedPatient) {
+      setShowDeleteModal(true)
+    }
+
+  }
+
+  const handleDeletePatient = async () => {
+    const isDeleted = await dispatch(deleteUser(selectedPatient.id))
+
+    if (isDeleted) {
+      setPatiens(patients.filter(patient=> patient.id !== selectedPatient.id))
+      toast.success(`Successfully deleted ${selectedPatient.name}!`)
+      setSelectedPatient(null)
+      setHistory([])
+      setShowDeleteModal(false)
+    } else {
+      toast.error(`Something went wrong`)
+      setShowDeleteModal(false)
+    }
+  };
 
   useEffect(() =>  {
     async function fetchData() {
@@ -132,13 +157,38 @@ const Profile = () => {
                 <Input value={zipValue} disabled={!isEditing}  onChange={e => setZipValue(e.target.value)}/>
               </Field>   
             </div>
-            <Button label={isEditing? 'Save' : 'Edit'} fontSize='1.1rem' width='100px' onClick={handleEdit}/> 
+            <Flex gap='30px'>
+              <Button disabled={!selectedPatient} label={isEditing? 'Save' : 'Edit'} fontSize='1.1rem' width='100px' onClick={handleEdit}/>
+              <Tooltip text='Delete'>
+                <Button disabled={!selectedPatient} label={<MdDeleteForever />} fontSize='1.4rem' width='100px' onClick={()=> removePatient()}/> 
+              </Tooltip>
+
+            </Flex>
+
             <Divider />
             <Label label='Appointments history' info={showInfo && ['The table below shows the appointments history of the selected patient. You cannot edit it.']}/>
             <Spacer />
             <Table table={{headers, rows}} />
         </div>
       </div>
+      <Modal visible={showDeleteModal} centered>
+        <Dialog
+          dialog={{
+            width: '500px',
+            heading: 'Are you sure?',
+            content: `Are you sure you want to delete ${selectedPatient?.name}`,
+            footer: ( 
+            <>
+            <Button active label ='Yes' onClick={handleDeletePatient} />
+            <Button onClick={() => setShowDeleteModal(false)} label='No'/>
+            </>
+            ),
+            onClose: () => setShowDeleteModal(false),
+          }}
+        >
+        </Dialog>
+      </Modal>
+      
     </Page>
   )
 }
