@@ -32,7 +32,6 @@ export const CustomDayPicker =({value, onSelect, info, mode='single'}) => {
               from: new Date(date?.from.getTime() - userTimezoneOffset),
               to: date.to && new Date(date?.to.getTime() - userTimezoneOffset)
             }
-            console.log(normalizedRange)
             onSelect({...normalizedRange});
           } else {
             onSelect(date);

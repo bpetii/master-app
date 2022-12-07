@@ -15,7 +15,6 @@
     <div id="root"></div>
     <script type="text/javascript">
       function printLayer(layer) {
-        console.log('here')
         const generator = window.open(",name,")
         const layerText = document.getElementById(layer)
         generator.document.write(layerText.innerHTML.replace('Print me'))

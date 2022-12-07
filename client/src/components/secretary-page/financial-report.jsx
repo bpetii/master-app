@@ -28,7 +28,6 @@ const FinancialReport = () => {
   const {showInfo} = useSelector(state => state.ui);
   const todayDate = new Date();
   const { access_token, doctorid} = useSelector(state => state.user.user);
-  console.log(doctorid);
   const [patients, setPatiens] = useState({items: []});
   const [datetime, setDatetime] = useState(todayDate);
   const [isMultiple, setMultiple] = useState(false);
@@ -50,7 +49,6 @@ const FinancialReport = () => {
     fetchData();
   }, [datetime, range, isMultiple]);
 
-  console.log(patients);
   const sum = patients.items.reduce((prev, cur) => {
     return prev+ +cur.metadata;
   },0)

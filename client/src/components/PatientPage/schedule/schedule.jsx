@@ -53,8 +53,6 @@ const Schedule = ({userid, doctorid}) => {
     }
     return false;
   }
-  console.log(!error);
-  console.log(done);
 
   const ThemeWrapper = () => {
     if(isDarkMode) {

@@ -43,7 +43,6 @@ export const authLogin = (email, password, isSecretary) => async dispatch => {
         body: JSON.stringify({email, password, isSecretary})
       });
       const parsedRes = await response.json();
-      console.log(parsedRes);
       if (parsedRes.access_token) {
         dispatch(logIn(parsedRes))
         return Promise.resolve();
